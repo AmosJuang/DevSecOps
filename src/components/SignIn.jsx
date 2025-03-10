@@ -1,11 +1,12 @@
-import { Box, Container, Typography, TextField, Button, Paper } from "@mui/material";
+import { Box, Container, Typography, TextField, Button, Paper, textFieldClasses } from "@mui/material";
 import { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom"; 
 const SignIn = () => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,12 +39,13 @@ const SignIn = () => {
                         alignItems: "center",
                         backgroundColor: "#121212",
                         border: "1px solid #f5c518",
+                        width : "100%",
                     }}
                 >
                     <Typography component="h1" variant="h5" sx={{ color: "#f5c518", marginBottom: 3 }}>
-                        Sign in to IMDb
+                        Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width : "100%" }}>
                         <TextField
                             margin="normal"
                             required
@@ -106,6 +108,24 @@ const SignIn = () => {
                         >
                             Sign In
                         </Button>
+                    <Box sx={{ mt: 2, textAlign: 'center' }}>
+                        <Typography variant="body2" sx={{ color: 'white' }}>
+                            Belum punya akun ? {' '}
+                            <Button
+                                onClick={() => navigate('/register')}
+                                sx={{
+                                    color: '#f5c518',
+                                    textTransform: 'none',
+                                    '&:hover': {
+                                        textDecoration: 'underline',
+                                        backgroundColor: 'transparent'
+                                    }
+                                }}
+                            >
+                                Register!
+                            </Button>
+                        </Typography>
+                    </Box>
                     </Box>
                 </Paper>
             </Box>
