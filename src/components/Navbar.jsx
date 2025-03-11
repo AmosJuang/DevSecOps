@@ -13,45 +13,32 @@ const Navbar = () => {
         setLanguage(event.target.value);
     };
 
+    const handleSignInClick = () => {
+        navigate("/signin");
+    }
+
     return (
         <AppBar position="static" sx={{ backgroundColor: "#121212", padding: "10px" }}>
             <Toolbar>
-                <Typography 
-                    variant="h6" 
-                    sx={{ 
-                        fontWeight: "bold", 
-                        color: "#f5c518", 
-                        marginRight: "20px",
-                        cursor: "pointer" 
-                    }}
-                    onClick={() => navigate("/")}
-                >
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#f5c518", marginRight: "20px" }}>
                     IMDb
                 </Typography>
                 <IconButton color="inherit">
                     <MenuIcon />
                 </IconButton>
-                <div style={{ position: 'relative', flexGrow: 1, marginLeft: "20px" }}>
-                    <InputBase
-                        placeholder="Search IMDb"
-                        sx={{
-                            backgroundColor: "white",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            width: "100%"
-                        }}
-                    />
-                    <IconButton 
-                        sx={{ 
-                            position: 'absolute', 
-                            right: 2, 
-                            top: '50%', 
-                            transform: 'translateY(-50%)'
-                        }}
-                    >
-                        <SearchIcon sx={{ color: 'black' }} />
-                    </IconButton>
-                </div>
+                <InputBase
+                    placeholder="Search"
+                    sx={{
+                        backgroundColor: "white",
+                        borderRadius: "5px",
+                        padding: "5px 10px",
+                        marginLeft: "20px",
+                        flexGrow: 1,
+                    }}
+                />
+                <IconButton color="inherit">
+                    <SearchIcon />
+                </IconButton>
                 <IconButton color="inherit">
                     <BookmarkBorderIcon />
                 </IconButton>
@@ -70,11 +57,11 @@ const Navbar = () => {
                     <MenuItem value="ru">Русский</MenuItem>
                     <MenuItem value="hi">हिन्दी</MenuItem>
                 </Select>
-                <Button 
-                    variant="contained" 
-                    color="warning" 
+                <Button
+                    variant="contained"
+                    color="warning"
                     sx={{ marginLeft: "20px" }}
-                    onClick={() => navigate("/signin")}
+                    onClick={handleSignInClick} // Add onClick handler
                 >
                     Sign In
                 </Button>
