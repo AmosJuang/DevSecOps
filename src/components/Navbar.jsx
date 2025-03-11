@@ -3,13 +3,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [language, setLanguage] = useState("en");
+    const navigate = useNavigate();
 
     const handleLanguageChange = (event) => {
         setLanguage(event.target.value);
     };
+
+    const handleSignInClick = () => {
+        navigate("/signin");
+    }
 
     return (
         <AppBar position="static" sx={{ backgroundColor: "#121212", padding: "10px" }}>
@@ -51,7 +57,14 @@ const Navbar = () => {
                     <MenuItem value="ru">Русский</MenuItem>
                     <MenuItem value="hi">हिन्दी</MenuItem>
                 </Select>
-                <Button variant="contained" color="warning" sx={{ marginLeft: "20px" }}>Sign In</Button>
+                <Button
+                    variant="contained"
+                    color="warning"
+                    sx={{ marginLeft: "20px" }}
+                    onClick={handleSignInClick} // Add onClick handler
+                >
+                    Sign In
+                </Button>
             </Toolbar>
         </AppBar>
     );
