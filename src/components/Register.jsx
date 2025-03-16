@@ -7,7 +7,7 @@ const Register = () => {
         username: '',
         email: '',
         password: '',
-        confirmPassword: '', 
+        confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
 
@@ -44,7 +44,7 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log('Form submitted:', formData);
+            console.log('Registration successful!');
             navigate('/signin');
         }
     };

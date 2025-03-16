@@ -92,6 +92,11 @@ const SignIn = () => {
                                 },
                             }}
                         />
+                        <Box sx={{ textAlign: 'right', marginBottom: '10px' }}>
+                            <Link to="/forget-password" style={{ color: '#f5c518', textDecoration: 'none' }}>
+                                Forgot your password?
+                            </Link>
+                        </Box>
                         <Button
                             type="submit"
                             fullWidth

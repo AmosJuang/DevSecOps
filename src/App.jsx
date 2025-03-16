@@ -3,10 +3,11 @@ import Navbar from "./components/Navbar";
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Home from "./pages/Home";
+import ForgetPassword from './components/ForgetPassword';
 
 function AppContent() {
   const location = useLocation();
-  const showNavbar = !["/signin", "/register"].includes(location.pathname);
+  const showNavbar = !["/signin", "/register", "/forget-password"].includes(location.pathname);
 
   return (
     <div className="app-container">
@@ -15,6 +16,7 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
       </Routes>
     </div>
   );
