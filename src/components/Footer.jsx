@@ -3,44 +3,27 @@ import "./Footer.css";
 
 const Footer = () => {
     const [currentYear] = useState(new Date().getFullYear());
-    const [adBanner, setAdBanner] = useState(1);
+    const [trending, setTrending] = useState([]);
 
-    // Cycle through different ad banners
+    // Simulasi pengambilan data trending
     useEffect(() => {
-        const interval = setInterval(() => {
-            setAdBanner(prev => (prev === 3 ? 1 : prev + 1));
-        }, 5000);
-        
-        return () => clearInterval(interval);
+        const trendingData = [
+            { title: "Dune: Part Two", link: "/movies/dune-2" },
+            { title: "The Last of Us", link: "/tv-shows/the-last-of-us" },
+            { title: "Deadpool & Wolverine", link: "/movies/deadpool-wolverine" }
+        ];
+        setTrending(trendingData);
     }, []);
 
     return (
         <footer className="footer-container">
-            <div className="footer-ad-section">
-                <h4 className="footer-ad-title">Advertisement</h4>
-                <div className="footer-ad-banner">
-                    {adBanner === 1 && (
-                        <div className="ad-content ad-1">
-                            <h3>Premium Subscription</h3>
-                            <p>Watch movies ad-free! Try our premium plan today.</p>
-                            <button className="ad-button">Try Free</button>
-                        </div>
-                    )}
-                    {adBanner === 2 && (
-                        <div className="ad-content ad-2">
-                            <h3>New Releases</h3>
-                            <p>Check out the latest blockbusters in your area!</p>
-                            <button className="ad-button">Find Movies</button>
-                        </div>
-                    )}
-                    {adBanner === 3 && (
-                        <div className="ad-content ad-3">
-                            <h3>Movie Merchandise</h3>
-                            <p>Get 20% off official merchandise with code: MOVIE20</p>
-                            <button className="ad-button">Shop Now</button>
-                        </div>
-                    )}
-                </div>
+            <div className="footer-trending-section">
+                <h4 className="footer-trending-title">Trending Now</h4>
+                <ul className="footer-trending-list">
+                    {trending.map((item, index) => (
+                        <li key={index}><a href={item.link}>{item.title}</a></li>
+                    ))}
+                </ul>
             </div>
 
             <div className="footer-main">
