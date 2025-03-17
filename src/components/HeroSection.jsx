@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const images = [
     { id: 1, src: "./src/assets/a.jpg", title: "Death of a Unicorn", description: "Watch the thrilling new trailer now!", related: "./src/assets/1.jpg" },
@@ -13,6 +14,7 @@ const HeroSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [autoplay, setAutoplay] = useState(true);
+    const navigate = useNavigate();
 
     // Auto-rotation for carousel
     useEffect(() => {
@@ -92,6 +94,10 @@ const HeroSection = () => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [currentIndex]);
+
+    const handleMovieClick = (movieId) => {
+        navigate(`/movie/${movieId}`);
+    };
 
     return (
         <div
@@ -222,20 +228,22 @@ const HeroSection = () => {
                         }}>
                             {images[currentIndex].description}
                         </p>
-                        <button style={{
-                            background: "#f5c518",
-                            color: "black",
-                            fontSize: "16px",
-                            padding: "12px 24px",
-                            border: "none",
-                            borderRadius: "6px",
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            transition: "background 0.3s, transform 0.2s",
-                            marginBottom: "20px"
-                        }}
+                        <button 
+                            style={{
+                                background: "#f5c518",
+                                color: "black",
+                                fontSize: "16px",
+                                padding: "12px 24px",
+                                border: "none",
+                                borderRadius: "6px",
+                                cursor: "pointer",
+                                fontWeight: "bold",
+                                transition: "background 0.3s, transform 0.2s",
+                                marginBottom: "20px"
+                            }}
                             onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
                             onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                            onClick={() => handleMovieClick(images[currentIndex].id)}
                         >
                             Watch Now ▶
                         </button>

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [language, setLanguage] = useState("en");
+    const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
     const handleLanguageChange = (event) => {
@@ -17,6 +18,18 @@ const Navbar = () => {
         navigate("/signin");
     }
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            // Use navigate with state to force re-render
+            navigate({
+                pathname: '/search',
+                search: `?q=${encodeURIComponent(searchQuery.trim())}`
+            });
+            setSearchQuery('');
+        }
+    };
+
     return (
         <AppBar position="static" sx={{ backgroundColor: "#121212", padding: "10px" }}>
             <Toolbar>
@@ -26,19 +39,23 @@ const Navbar = () => {
                 <IconButton color="inherit">
                     <MenuIcon />
                 </IconButton>
-                <InputBase
-                    placeholder="Search"
-                    sx={{
-                        backgroundColor: "white",
-                        borderRadius: "5px",
-                        padding: "5px 10px",
-                        marginLeft: "20px",
-                        flexGrow: 1,
-                    }}
-                />
-                <IconButton color="inherit">
-                    <SearchIcon />
-                </IconButton>
+                <form onSubmit={handleSearch} style={{ display: 'flex', flexGrow: 1 }}>
+                    <InputBase
+                        placeholder="Search movies..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        sx={{
+                            backgroundColor: "white",
+                            borderRadius: "5px",
+                            padding: "5px 10px",
+                            marginLeft: "20px",
+                            flexGrow: 1,
+                        }}
+                    />
+                    <IconButton type="submit" color="inherit">
+                        <SearchIcon />
+                    </IconButton>
+                </form>
                 <IconButton color="inherit">
                     <BookmarkBorderIcon />
                 </IconButton>
