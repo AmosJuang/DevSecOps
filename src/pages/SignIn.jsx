@@ -22,9 +22,8 @@ const SignIn = () => {
                 />
                 <Button
                     variant="contained"
-                    color="warning"
+                    sx={{ marginTop: "20px", backgroundColor: "#61dafb", '&:hover': { backgroundColor: "#4fc3dc" } }}
                     fullWidth
-                    sx={{ marginTop: "20px" }}
                 >
                     Sign In
                 </Button>

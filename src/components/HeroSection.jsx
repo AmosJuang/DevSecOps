@@ -69,7 +69,7 @@ const HeroSection = () => {
                             width: "12px",
                             height: "12px",
                             borderRadius: "50%",
-                            background: index === currentIndex ? "#f5c518" : "rgba(255,255,255,0.5)",
+                            background: index === currentIndex ? "#61dafb" : "rgba(255,255,255,0.5)",
                             border: "none",
                             cursor: "pointer",
                             transition: "background 0.3s, transform 0.2s",
@@ -98,7 +98,7 @@ const HeroSection = () => {
             style={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "#000",
+                backgroundColor: "#121212",
                 color: "white",
                 padding: "20px",
                 borderRadius: "12px",
@@ -132,7 +132,7 @@ const HeroSection = () => {
                             maxHeight: "500px",
                             objectFit: "cover",
                             borderRadius: "12px",
-                            boxShadow: "0px 4px 15px rgba(255,255,255,0.3)",
+                            boxShadow: "0px 4px 15px rgba(97,218,251,0.3)",
                             opacity: isTransitioning ? 0.4 : 1,
                             transition: "opacity 0.3s ease-in-out"
                         }}
@@ -144,12 +144,12 @@ const HeroSection = () => {
                             left: "10px",
                             top: "50%",
                             transform: "translateY(-50%)",
-                            background: "rgba(0,0,0,0.6)",
+                            background: "rgba(18,18,18,0.6)",
                             border: "none",
                             padding: "12px",
                             cursor: "pointer",
                             fontSize: "28px",
-                            color: "white",
+                            color: "#61dafb",
                             borderRadius: "50%",
                             transition: "background 0.3s, transform 0.2s",
                             opacity: 0.7,
@@ -169,12 +169,12 @@ const HeroSection = () => {
                             right: "10px",
                             top: "50%",
                             transform: "translateY(-50%)",
-                            background: "rgba(0,0,0,0.6)",
+                            background: "rgba(18,18,18,0.6)",
                             border: "none",
                             padding: "12px",
                             cursor: "pointer",
                             fontSize: "28px",
-                            color: "white",
+                            color: "#61dafb",
                             borderRadius: "50%",
                             transition: "background 0.3s, transform 0.2s",
                             opacity: 0.7,
@@ -211,7 +211,8 @@ const HeroSection = () => {
                         <h2 style={{
                             fontSize: "28px",
                             fontWeight: "bold",
-                            marginBottom: "10px"
+                            marginBottom: "10px",
+                            color: "#ffffff"
                         }}>
                             {images[currentIndex].title}
                         </h2>
@@ -223,8 +224,8 @@ const HeroSection = () => {
                             {images[currentIndex].description}
                         </p>
                         <button style={{
-                            background: "#f5c518",
-                            color: "black",
+                            background: "#61dafb",
+                            color: "#121212",
                             fontSize: "16px",
                             padding: "12px 24px",
                             border: "none",
@@ -234,8 +235,14 @@ const HeroSection = () => {
                             transition: "background 0.3s, transform 0.2s",
                             marginBottom: "20px"
                         }}
-                            onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-                            onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                            onMouseOver={(e) => {
+                                e.currentTarget.style.transform = "scale(1.05)";
+                                e.currentTarget.style.background = "#4fa8d1";
+                            }}
+                            onMouseOut={(e) => {
+                                e.currentTarget.style.transform = "scale(1)";
+                                e.currentTarget.style.background = "#61dafb";
+                            }}
                         >
                             Watch Now ▶
                         </button>
@@ -249,7 +256,7 @@ const HeroSection = () => {
                         overflowX: "hidden",
                         paddingRight: "10px",
                         scrollbarWidth: "thin",
-                        scrollbarColor: "#f5c518 #333"
+                        scrollbarColor: "#61dafb #2a2a2a"
                     }}>
                         {images.map((image, index) => (
                             <div
@@ -261,7 +268,7 @@ const HeroSection = () => {
                                     gap: "10px",
                                     padding: "8px",
                                     borderRadius: "8px",
-                                    background: index === currentIndex ? "rgba(245,197,24,0.9)" : "rgba(50,50,50,0.3)",
+                                    background: index === currentIndex ? "rgba(97,218,251,0.9)" : "rgba(42,42,42,0.8)",
                                     marginBottom: "8px",
                                     transition: "all 0.3s",
                                     cursor: "pointer",
@@ -269,12 +276,12 @@ const HeroSection = () => {
                                 }}
                                 onMouseOver={(e) => {
                                     if (index !== currentIndex) {
-                                        e.currentTarget.style.background = "rgba(245,197,24,0.3)";
+                                        e.currentTarget.style.background = "rgba(97,218,251,0.3)";
                                     }
                                 }}
                                 onMouseOut={(e) => {
                                     if (index !== currentIndex) {
-                                        e.currentTarget.style.background = "rgba(50,50,50,0.3)";
+                                        e.currentTarget.style.background = "rgba(42,42,42,0.8)";
                                     }
                                 }}
                             >
@@ -291,7 +298,7 @@ const HeroSection = () => {
                                     }}
                                 />
                                 <span style={{
-                                    color: index === currentIndex ? "black" : "white",
+                                    color: index === currentIndex ? "#121212" : "white",
                                     fontWeight: index === currentIndex ? "bold" : "normal",
                                     fontSize: "14px"
                                 }}>
@@ -308,10 +315,11 @@ const HeroSection = () => {
                     position: "absolute",
                     bottom: "5px",
                     right: "20px",
-                    background: "rgba(0,0,0,0.5)",
+                    background: "rgba(18,18,18,0.7)",
                     padding: "5px 10px",
                     borderRadius: "4px",
-                    fontSize: "12px"
+                    fontSize: "12px",
+                    color: "#61dafb"
                 }}>
                     Auto-playing • Hover to pause
                 </div>

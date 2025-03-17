@@ -118,15 +118,6 @@ const Footer = () => {
                     <a href="/cookies">Cookie Policy</a>
                     <a href="/accessibility">Accessibility</a>
                 </div>
-                <div className="footer-language">
-                    <select defaultValue="en" aria-label="Language">
-                        <option value="en">English</option>
-                        <option value="es">Español</option>
-                        <option value="fr">Français</option>
-                        <option value="de">Deutsch</option>
-                        <option value="id">Bahasa Indonesia</option>
-                    </select>
-                </div>
             </div>
         </footer>
     );

@@ -20,32 +20,46 @@ const Navbar = () => {
     return (
         <AppBar position="static" sx={{ backgroundColor: "#121212", padding: "10px" }}>
             <Toolbar>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#f5c518", marginRight: "20px" }}>
-                    IMDb
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#61dafb", marginRight: "20px" }}>
+                    ReelRate
                 </Typography>
-                <IconButton color="inherit">
+                <IconButton color="inherit" sx={{ color: "#61dafb" }}>
                     <MenuIcon />
                 </IconButton>
                 <InputBase
                     placeholder="Search"
                     sx={{
-                        backgroundColor: "white",
+                        backgroundColor: "#2a2a2a",
+                        color: "#ffffff",
                         borderRadius: "5px",
                         padding: "5px 10px",
                         marginLeft: "20px",
                         flexGrow: 1,
+                        '&::placeholder': {
+                            color: '#888888',
+                            opacity: 1,
+                        },
                     }}
                 />
-                <IconButton color="inherit">
+                <IconButton color="inherit" sx={{ color: "#61dafb" }}>
                     <SearchIcon />
                 </IconButton>
-                <IconButton color="inherit">
+                <IconButton color="inherit" sx={{ color: "#61dafb" }}>
                     <BookmarkBorderIcon />
                 </IconButton>
                 <Select
                     value={language}
                     onChange={handleLanguageChange}
-                    sx={{ marginLeft: "20px", color: "white", backgroundColor: "#333", borderRadius: "5px", height: "40px" }}
+                    sx={{ 
+                        marginLeft: "20px",
+                        color: "white",
+                        backgroundColor: "#2a2a2a",
+                        borderRadius: "5px",
+                        height: "40px",
+                        '& .MuiSelect-icon': {
+                            color: '#61dafb'
+                        }
+                    }}
                 >
                     <MenuItem value="en">English</MenuItem>
                     <MenuItem value="es">Español</MenuItem>
@@ -59,9 +73,15 @@ const Navbar = () => {
                 </Select>
                 <Button
                     variant="contained"
-                    color="warning"
-                    sx={{ marginLeft: "20px" }}
-                    onClick={handleSignInClick} // Add onClick handler
+                    sx={{
+                        marginLeft: "20px",
+                        backgroundColor: "#61dafb",
+                        color: "#121212",
+                        '&:hover': {
+                            backgroundColor: "#4fa8d1"
+                        }
+                    }}
+                    onClick={handleSignInClick}
                 >
                     Sign In
                 </Button>

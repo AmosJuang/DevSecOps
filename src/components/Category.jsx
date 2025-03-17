@@ -14,13 +14,15 @@ const Category = () => {
 
     const categories = [
         {
-            title: "Top 10 on IMDb this week",
+            title: "Top 10 on this week",
             items: [
                 { name: "The White Lotus", image: "./src/assets/1.jpg", rating: 8.5 },
                 { name: "Zero Day", image: "./src/assets/1.jpg", rating: 7.9 },
                 { name: "Severance", image: "./src/assets/1.jpg", rating: 9.1 },
                 { name: "Reacher", image: "./src/assets/1.jpg", rating: 8.3 },
                 { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                {name: "The White Lotus", image: "./src/assets/1.jpg", rating: 8.5 },
+                { name: "The White Lotus", image: "./src/assets/1.jpg", rating: 8.5 },
             ],
         },
         {
@@ -30,6 +32,9 @@ const Category = () => {
                 { name: "The Brutalist", image: "./src/assets/1.jpg", rating: 7.5 },
                 { name: "Daredevil: Born Again", image: "./src/assets/1.jpg", rating: 8.7 },
                 { name: "Companion", image: "./src/assets/1.jpg", rating: 7.8 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
             ],
         },
         {
@@ -38,6 +43,10 @@ const Category = () => {
                 { name: "Superhero", image: "./src/assets/1.jpg", rating: 8.2 },
                 { name: "Coming-of-age", image: "./src/assets/1.jpg", rating: 7.6 },
                 { name: "Slasher Horror", image: "./src/assets/1.jpg", rating: 7.3 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
+                { name: "Panic", image: "./src/assets/1.jpg", rating: 7.7 },
             ],
         },
     ];

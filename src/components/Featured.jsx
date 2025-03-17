@@ -18,9 +18,9 @@ const Featured = () => {
 
     // Sample celebrity data
     const celebrities = [
-        { name: "Tom Cruise", image: "./src/assets/F1.jpg" },
-        { name: "Scarlett Johansson", image: "./src/assets/F2.jpg" },
-        { name: "Robert Downey Jr.", image: "./src/assets/F3jpg.jpg" },
+        { name: "Tom Cruise", image: "./src/assets/f1.jpg" },
+        { name: "Scarlett Johansson", image: "./src/assets/f2.jpg" },
+        { name: "Robert Downey Jr.", image: "./src/assets/f3.jpg" },
         { name: "Zendaya", image: "./src/assets/f4.jpg" },
         { name: "Chris Hemsworth", image: "./src/assets/f5.jpg" },
         { name: "Jennifer Lawrence", image: "./src/assets/f6.jpg" },
