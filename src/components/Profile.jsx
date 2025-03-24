@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Profile = () => {
-    // Mock user data 
+    // Mock user data - replace with actual user data later
     const user = {
         name: 'Guest User',
         email: 'guest@example.com',

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const images = [
     { id: 1, src: "./src/assets/a.jpg", title: "Death of a Unicorn", description: "Watch the thrilling new trailer now!", related: "./src/assets/1.jpg" },
@@ -13,6 +14,7 @@ const HeroSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [autoplay, setAutoplay] = useState(true);
+    const navigate = useNavigate();
 
     // Auto-rotation for carousel
     useEffect(() => {
@@ -93,12 +95,16 @@ const HeroSection = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [currentIndex]);
 
+    const handleMovieClick = (movieId) => {
+        navigate(`/movie/${movieId}`);
+    };
+
     return (
         <div
             style={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "#121212",
+                backgroundColor: "#000",
                 color: "white",
                 padding: "20px",
                 borderRadius: "12px",
@@ -132,7 +138,7 @@ const HeroSection = () => {
                             maxHeight: "500px",
                             objectFit: "cover",
                             borderRadius: "12px",
-                            boxShadow: "0px 4px 15px rgba(97,218,251,0.3)",
+                            boxShadow: "0px 4px 15px rgba(255,255,255,0.3)",
                             opacity: isTransitioning ? 0.4 : 1,
                             transition: "opacity 0.3s ease-in-out"
                         }}
@@ -144,12 +150,12 @@ const HeroSection = () => {
                             left: "10px",
                             top: "50%",
                             transform: "translateY(-50%)",
-                            background: "rgba(18,18,18,0.6)",
+                            background: "rgba(0,0,0,0.6)",
                             border: "none",
                             padding: "12px",
                             cursor: "pointer",
                             fontSize: "28px",
-                            color: "#61dafb",
+                            color: "white",
                             borderRadius: "50%",
                             transition: "background 0.3s, transform 0.2s",
                             opacity: 0.7,
@@ -169,12 +175,12 @@ const HeroSection = () => {
                             right: "10px",
                             top: "50%",
                             transform: "translateY(-50%)",
-                            background: "rgba(18,18,18,0.6)",
+                            background: "rgba(0,0,0,0.6)",
                             border: "none",
                             padding: "12px",
                             cursor: "pointer",
                             fontSize: "28px",
-                            color: "#61dafb",
+                            color: "white",
                             borderRadius: "50%",
                             transition: "background 0.3s, transform 0.2s",
                             opacity: 0.7,
@@ -211,8 +217,7 @@ const HeroSection = () => {
                         <h2 style={{
                             fontSize: "28px",
                             fontWeight: "bold",
-                            marginBottom: "10px",
-                            color: "#ffffff"
+                            marginBottom: "10px"
                         }}>
                             {images[currentIndex].title}
                         </h2>
@@ -223,26 +228,22 @@ const HeroSection = () => {
                         }}>
                             {images[currentIndex].description}
                         </p>
-                        <button style={{
-                            background: "#61dafb",
-                            color: "#121212",
-                            fontSize: "16px",
-                            padding: "12px 24px",
-                            border: "none",
-                            borderRadius: "6px",
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            transition: "background 0.3s, transform 0.2s",
-                            marginBottom: "20px"
-                        }}
-                            onMouseOver={(e) => {
-                                e.currentTarget.style.transform = "scale(1.05)";
-                                e.currentTarget.style.background = "#4fa8d1";
+                        <button 
+                            style={{
+                                background: "#61dafb",
+                                color: "black",
+                                fontSize: "16px",
+                                padding: "12px 24px",
+                                border: "none",
+                                borderRadius: "6px",
+                                cursor: "pointer",
+                                fontWeight: "bold",
+                                transition: "background 0.3s, transform 0.2s",
+                                marginBottom: "20px"
                             }}
-                            onMouseOut={(e) => {
-                                e.currentTarget.style.transform = "scale(1)";
-                                e.currentTarget.style.background = "#61dafb";
-                            }}
+                            onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                            onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+                            onClick={() => handleMovieClick(images[currentIndex].id)}
                         >
                             Watch Now ▶
                         </button>
@@ -256,7 +257,7 @@ const HeroSection = () => {
                         overflowX: "hidden",
                         paddingRight: "10px",
                         scrollbarWidth: "thin",
-                        scrollbarColor: "#61dafb #2a2a2a"
+                        scrollbarColor: "#61dafb #333"
                     }}>
                         {images.map((image, index) => (
                             <div
@@ -268,7 +269,7 @@ const HeroSection = () => {
                                     gap: "10px",
                                     padding: "8px",
                                     borderRadius: "8px",
-                                    background: index === currentIndex ? "rgba(97,218,251,0.9)" : "rgba(42,42,42,0.8)",
+                                    background: index === currentIndex ? "rgba(245,197,24,0.9)" : "rgba(50,50,50,0.3)",
                                     marginBottom: "8px",
                                     transition: "all 0.3s",
                                     cursor: "pointer",
@@ -276,12 +277,12 @@ const HeroSection = () => {
                                 }}
                                 onMouseOver={(e) => {
                                     if (index !== currentIndex) {
-                                        e.currentTarget.style.background = "rgba(97,218,251,0.3)";
+                                        e.currentTarget.style.background = "rgba(245,197,24,0.3)";
                                     }
                                 }}
                                 onMouseOut={(e) => {
                                     if (index !== currentIndex) {
-                                        e.currentTarget.style.background = "rgba(42,42,42,0.8)";
+                                        e.currentTarget.style.background = "rgba(50,50,50,0.3)";
                                     }
                                 }}
                             >
@@ -298,7 +299,7 @@ const HeroSection = () => {
                                     }}
                                 />
                                 <span style={{
-                                    color: index === currentIndex ? "#121212" : "white",
+                                    color: index === currentIndex ? "black" : "white",
                                     fontWeight: index === currentIndex ? "bold" : "normal",
                                     fontSize: "14px"
                                 }}>
@@ -315,11 +316,10 @@ const HeroSection = () => {
                     position: "absolute",
                     bottom: "5px",
                     right: "20px",
-                    background: "rgba(18,18,18,0.7)",
+                    background: "rgba(0,0,0,0.5)",
                     padding: "5px 10px",
                     borderRadius: "4px",
-                    fontSize: "12px",
-                    color: "#61dafb"
+                    fontSize: "12px"
                 }}>
                     Auto-playing • Hover to pause
                 </div>

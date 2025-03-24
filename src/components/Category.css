@@ -1,5 +1,5 @@
 .category-wrapper {
-    background-color: #121212;
+    background-color: #111;
     color: white;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@
 }
 
 .category-container::-webkit-scrollbar-track {
-    background: #2a2a2a;
+    background: #222;
     border-radius: 10px;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .category-container::-webkit-scrollbar-thumb:hover {
-    background: #4fa8d1;
+    background: #daa520;
 }
 
 .category-item {
@@ -54,7 +54,7 @@
 
 .category-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(97, 218, 251, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .image-container {
@@ -78,7 +78,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgba(18, 18, 18, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     color: white;
     border: none;
     border-radius: 50%;
@@ -97,7 +97,7 @@
 }
 
 .bookmark-button:hover {
-    background-color: rgba(97, 218, 251, 0.8);
+    background-color: rgba(245, 197, 24, 0.8);
     transform: scale(1.1);
 }
 
@@ -150,20 +150,20 @@
     padding: 4px 8px;
     font-size: 12px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 .watchlist-button:hover {
-    background-color: #2a2a2a;
-    border-color: #61dafb;
+    background-color: #333;
+    border-color: #777;
 }
 
 .trailer-button {
     width: 100%;
-    background-color: rgba(97, 218, 251, 0.1);
+    background-color: rgba(245, 197, 24, 0.2);
     color: #61dafb;
     border: 1px solid #61dafb;
     border-radius: 4px;
@@ -178,7 +178,7 @@
 }
 
 .trailer-button:hover {
-    background-color: rgba(97, 218, 251, 0.2);
+    background-color: rgba(245, 197, 24, 0.3);
 }
 
 .trailer-button i {
