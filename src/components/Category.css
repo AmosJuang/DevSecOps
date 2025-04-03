@@ -14,7 +14,7 @@
     font-weight: bold;
     margin-bottom: 15px;
     padding-left: 10px;
-    color: #61dafb;
+    color: #E50914;
 }
 
 .category-container {
@@ -35,12 +35,12 @@
 }
 
 .category-container::-webkit-scrollbar-thumb {
-    background: #61dafb;
+    background: #E50914;
     border-radius: 10px;
 }
 
 .category-container::-webkit-scrollbar-thumb:hover {
-    background: #daa520;
+    background: rgba(229, 9, 20, 0.3);
 }
 
 .category-item {
@@ -97,12 +97,12 @@
 }
 
 .bookmark-button:hover {
-    background-color: rgba(245, 197, 24, 0.8);
+    background-color: rgba(229, 9, 20, 0.3);
     transform: scale(1.1);
 }
 
 .bookmark-button.bookmarked {
-    background-color: #61dafb;
+    background-color: #E50914;
     opacity: 1;
 }
 
@@ -135,7 +135,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    color: #61dafb;
+    color: #E50914;
 }
 
 .rating i {
@@ -163,9 +163,9 @@
 
 .trailer-button {
     width: 100%;
-    background-color: rgba(245, 197, 24, 0.2);
-    color: #61dafb;
-    border: 1px solid #61dafb;
+    background-color: rgba(229, 9, 20, 0.3);
+    color: #ffffff;
+    border: 1px solid #E50914;
     border-radius: 4px;
     padding: 6px 0;
     font-size: 14px;
@@ -178,7 +178,7 @@
 }
 
 .trailer-button:hover {
-    background-color: rgba(245, 197, 24, 0.3);
+    background-color: rgba(229, 9, 20, 0.3);
 }
 
 .trailer-button i {

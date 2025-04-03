@@ -1,13 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
-    // Mock user data - replace with actual user data later
+const AdminProfile = () => {
+
     const user = {
-        name: 'Guest User',
-        email: 'guest@example.com',
-        role: 'guest',
+        name: 'Admin User',
+        email: 'admin@example.com',
+        role: 'admin',
         joinDate: new Date().toLocaleDateString()
     };
+
+    const navigate = useNavigate();
 
     const styles = {
         container: {
@@ -15,7 +18,9 @@ const Profile = () => {
             margin: '40px auto',
             padding: '20px',
             color: '#fff',
-            backgroundColor: '#141414'
+            backgroundColor: '#141414',
+            borderRadius: '10px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)'
         },
         header: {
             display: 'flex',
@@ -24,8 +29,7 @@ const Profile = () => {
             marginBottom: '30px',
             padding: '20px',
             backgroundColor: '#1f1f1f',
-            borderRadius: '10px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)'
+            borderRadius: '10px'
         },
         avatar: {
             width: '100px',
@@ -74,7 +78,32 @@ const Profile = () => {
         },
         value: {
             color: '#fff'
+        },
+        buttonContainer: {
+            marginTop: '20px',
+            textAlign: 'center'
+        },
+        button: {
+            backgroundColor: '#E50914',
+            color: '#000',
+            padding: '12px 30px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            borderRadius: '25px',
+            cursor: 'pointer',
+            border: 'none',
+            transition: 'transform 0.3s ease, background-color 0.3s ease',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)'
+        },
+        buttonHover: {
+            transform: 'scale(1.1)',
+            backgroundColor: '#e0b617'
         }
+    };
+
+    const handleNavigate = () => {
+        // Navigasi ke halaman dashboard admin
+        navigate('/Dashboard');
     };
 
     return (
@@ -104,8 +133,19 @@ const Profile = () => {
                     <span style={styles.value}>Active</span>
                 </div>
             </div>
+
+            <div style={styles.buttonContainer}>
+                <button
+                    style={styles.button}
+                    onClick={handleNavigate}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                >
+                    Go to Dashboard
+                </button>
+            </div>
         </div>
     );
 };
 
-export default Profile;
+export default AdminProfile;

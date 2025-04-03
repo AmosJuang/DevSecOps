@@ -5,87 +5,13 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* Advertisement Section */
-.footer-ad-section {
-    background-color: #1a1a1a;
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid #333;
-}
-
-.footer-ad-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #777;
-    margin-bottom: 10px;
-}
-
-.footer-ad-banner {
-    max-width: 800px;
-    height: 120px;
-    margin: 0 auto;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #222;
-    position: relative;
-}
-
-.ad-content {
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.ad-1 {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-}
-
-.ad-2 {
-    background: linear-gradient(135deg, #4a0038, #820041);
-}
-
-.ad-3 {
-    background: linear-gradient(135deg, #134e5e, #71b280);
-}
-
-.ad-content h3 {
-    margin: 0 0 10px 0;
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.ad-content p {
-    margin: 0 0 15px 0;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.ad-button {
-    background-color: #61dafb;
-    color: #000;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-weight: bold;
+.clickable {
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    color: #fff;
+    text-decoration: underline;
 }
-
-.ad-button:hover {
-    transform: translateY(-2px);
-    background-color: #ffd700;
+.clickable:hover {
+    color: #ccc;
 }
 
 /* Main Footer */
@@ -105,7 +31,7 @@
 }
 
 .footer-column h4 {
-    color: #61dafb;
+    color: #E50914;
     font-size: 18px;
     margin-bottom: 20px;
     position: relative;
@@ -119,7 +45,7 @@
     bottom: -8px;
     width: 30px;
     height: 2px;
-    background-color: #61dafb;
+    background-color: #E50914;
 }
 
 .footer-column ul {
@@ -140,7 +66,7 @@
 }
 
 .footer-column ul li a:hover {
-    color: #61dafb;
+    color: #E50914;
     transform: translateX(3px);
 }
 

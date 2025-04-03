@@ -1,48 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
     const [currentYear] = useState(new Date().getFullYear());
-    const [adBanner, setAdBanner] = useState(1);
-
-    // Cycle through different ad banners
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setAdBanner(prev => (prev === 3 ? 1 : prev + 1));
-        }, 5000);
-        
-        return () => clearInterval(interval);
-    }, []);
+    const navigate = useNavigate();
 
     return (
         <footer className="footer-container">
-            <div className="footer-ad-section">
-                <h4 className="footer-ad-title">Advertisement</h4>
-                <div className="footer-ad-banner">
-                    {adBanner === 1 && (
-                        <div className="ad-content ad-1">
-                            <h3>Premium Subscription</h3>
-                            <p>Watch movies ad-free! Try our premium plan today.</p>
-                            <button className="ad-button">Try Free</button>
-                        </div>
-                    )}
-                    {adBanner === 2 && (
-                        <div className="ad-content ad-2">
-                            <h3>New Releases</h3>
-                            <p>Check out the latest blockbusters in your area!</p>
-                            <button className="ad-button">Find Movies</button>
-                        </div>
-                    )}
-                    {adBanner === 3 && (
-                        <div className="ad-content ad-3">
-                            <h3>Movie Merchandise</h3>
-                            <p>Get 20% off official merchandise with code: MOVIE20</p>
-                            <button className="ad-button">Shop Now</button>
-                        </div>
-                    )}
-                </div>
-            </div>
-
             <div className="footer-main">
                 <div className="footer-column">
                     <h4>Discover</h4>
@@ -57,7 +22,8 @@ const Footer = () => {
                 <div className="footer-column">
                     <h4>Account</h4>
                     <ul>
-                        <li><a href="/profile">My Profile</a></li>
+                    <li><span onClick={() => navigate("/profile")} className="clickable">My Profile</span></li>
+                    <li><span onClick={() => navigate("/adminprofile")} className="clickable">AdminProfile</span></li>
                         <li><a href="/watchlist">Watchlist</a></li>
                         <li><a href="/ratings">My Ratings</a></li>
                         <li><a href="/settings">Settings</a></li>
@@ -117,15 +83,6 @@ const Footer = () => {
                     <a href="/terms">Terms of Service</a>
                     <a href="/cookies">Cookie Policy</a>
                     <a href="/accessibility">Accessibility</a>
-                </div>
-                <div className="footer-language">
-                    <select defaultValue="en" aria-label="Language">
-                        <option value="en">English</option>
-                        <option value="es">Español</option>
-                        <option value="fr">Français</option>
-                        <option value="de">Deutsch</option>
-                        <option value="id">Bahasa Indonesia</option>
-                    </select>
                 </div>
             </div>
         </footer>

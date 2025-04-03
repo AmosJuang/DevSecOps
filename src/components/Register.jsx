@@ -113,8 +113,8 @@ const Register = () => {
         },
         button: {
             width: "100%",
-            backgroundColor: "#f0c14b",
-            borderColor: "#a88734 #9c7e31 #846a29",
+            backgroundColor: "#c40000",
+            borderColor: "#8B0000 #B22222 #900C3F",
             color: "#111",
             borderStyle: "solid",
             borderWidth: "1px",

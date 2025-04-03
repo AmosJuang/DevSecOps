@@ -1,6 +1,6 @@
 import { Box, Container, Typography, TextField, Button, Paper, textFieldClasses } from "@mui/material";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 const SignIn = () => {
     const [formData, setFormData] = useState({
         email: "",
@@ -38,11 +38,11 @@ const SignIn = () => {
                         flexDirection: "column",
                         alignItems: "center",
                         backgroundColor: "#121212",
-                        border: "1px solid #f5c518",
+                        border: "1px solid #E50914",
                         width : "100%",
                     }}
                 >
-                    <Typography component="h1" variant="h5" sx={{ color: "#f5c518", marginBottom: 3 }}>
+                    <Typography component="h1" variant="h5" sx={{ color: "#E50914", marginBottom: 3 }}>
                         Sign in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width : "100%" }}>
@@ -61,11 +61,11 @@ const SignIn = () => {
                                 backgroundColor: "#333",
                                 input: { color: "white" },
                                 "& label": { color: "gray" },
-                                "& label.Mui-focused": { color: "#f5c518" },
+                                "& label.Mui-focused": { color: "#E50914" },
                                 "& .MuiOutlinedInput-root": {
                                     "& fieldset": { borderColor: "gray" },
-                                    "&:hover fieldset": { borderColor: "#f5c518" },
-                                    "&.Mui-focused fieldset": { borderColor: "#f5c518" },
+                                    "&:hover fieldset": { borderColor: "#E50914" },
+                                    "&.Mui-focused fieldset": { borderColor: "#E50914" },
                                 },
                             }}
                         />
@@ -84,16 +84,16 @@ const SignIn = () => {
                                 backgroundColor: "#333",
                                 input: { color: "white" },
                                 "& label": { color: "gray" },
-                                "& label.Mui-focused": { color: "#f5c518" },
+                                "& label.Mui-focused": { color: "#E50914" },
                                 "& .MuiOutlinedInput-root": {
                                     "& fieldset": { borderColor: "gray" },
-                                    "&:hover fieldset": { borderColor: "#f5c518" },
-                                    "&.Mui-focused fieldset": { borderColor: "#f5c518" },
+                                    "&:hover fieldset": { borderColor: "#E50914" },
+                                    "&.Mui-focused fieldset": { borderColor: "#E50914" },
                                 },
                             }}
                         />
                         <Box sx={{ textAlign: 'right', marginBottom: '10px' }}>
-                            <Link to="/forget-password" style={{ color: '#f5c518', textDecoration: 'none' }}>
+                            <Link to="/forget-password" style={{ color: '#E50914', textDecoration: 'none' }}>
                                 Forgot your password?
                             </Link>
                         </Box>
@@ -104,10 +104,10 @@ const SignIn = () => {
                             sx={{
                                 mt: 3,
                                 mb: 2,
-                                backgroundColor: "#f5c518",
+                                backgroundColor: "#E50914",
                                 color: "black",
                                 "&:hover": {
-                                    backgroundColor: "#dcb115",
+                                    backgroundColor: "#8B0000",
                                 },
                             }}
                         >
@@ -119,7 +119,7 @@ const SignIn = () => {
                             <Button
                                 onClick={() => navigate('/register')}
                                 sx={{
-                                    color: '#f5c518',
+                                    color: '#E50914',
                                     textTransform: 'none',
                                     '&:hover': {
                                         textDecoration: 'underline',

@@ -12,6 +12,9 @@ const MovieDetails = () => {
         { id: 2, user: 'Guest456', comment: 'Loved the plot twists', rating: 5, date: '2024-03-16' }
     ]);
 
+    // YouTube Video URL - Ganti dengan URL trailer film yang sesuai
+    const youtubeVideoId = "https://youtu.be/uLtkt8BonwM?si=B3QERuHH9pfq8_q6"; // Contoh ID video dari YouTube
+
     const handleSubmitReview = (e) => {
         e.preventDefault();
         if (!guestName.trim()) {
@@ -83,6 +86,27 @@ const MovieDetails = () => {
             marginBottom: '30px',
             color: '#e5e5e5'
         },
+        videoSection: {
+            margin: '20px 0 40px 0'
+        },
+        videoContainer: {
+            position: 'relative',
+            paddingBottom: '56.25%', // Aspek rasio 16:9
+            height: 0,
+            overflow: 'hidden',
+            maxWidth: '100%',
+            backgroundColor: '#000',
+            borderRadius: '8px'
+        },
+        videoFrame: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            border: 'none',
+            borderRadius: '8px'
+        },
         reviewSection: {
             width: '70%',
             margin: '0 auto',
@@ -114,19 +138,24 @@ const MovieDetails = () => {
             padding: '12px',
             backgroundColor: '#1f1f1f',
             borderRadius: '6px',
-            borderLeft: '3px solid #f5c518',
+            borderLeft: '3px solid #E50914',
             fontSize: '14px',
             color: '#e5e5e5'
         },
         button: {
-            background: '#f5c518',
+            background: '#E50914',
             border: 'none',
             padding: '8px 16px',
             borderRadius: '4px',
             cursor: 'pointer',
             fontWeight: 'bold',
-            color: '#000',
+            color: '#fff',
             transition: 'background 0.2s'
+        },
+        sectionTitle: {
+            fontSize: '24px',
+            marginBottom: '15px',
+            color: '#fff'
         }
     };
 
@@ -157,6 +186,20 @@ const MovieDetails = () => {
                         doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
                         veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                     </p>
+                </div>
+            </div>
+
+            {/* Bagian Video YouTube */}
+            <div style={styles.videoSection}>
+                <h2 style={styles.sectionTitle}>Official Trailer</h2>
+                <div style={styles.videoContainer}>
+                    <iframe 
+                        style={styles.videoFrame}
+                        src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                        title="Movie Trailer"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
                 </div>
             </div>
 
