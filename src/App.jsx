@@ -8,10 +8,13 @@ import SearchResults from './components/SearchResults';
 import ForgetPassword from './components/ForgetPassword';
 import MovieDetails from './components/MovieDetails';
 import Profile from './components/Profile';
+import AdminProfile from './components/AdminProfile';
+import Dashboard from './pages/Dashboard';
+import Bookmark from './components/Bookmark';
 
 function AppContent() {
     const location = useLocation();
-    const showNavbar = !["/signin", "/register", "/forget-password"].includes(location.pathname);
+    const showNavbar = !["/signin", "/register", "/forget-password", "/Dashboard"].includes(location.pathname);
 
     return (
         <div className="app-container" style={{ backgroundColor: '#141414', minHeight: '100vh' }}>
@@ -24,6 +27,9 @@ function AppContent() {
                 <Route path="/forget-password" element={<ForgetPassword />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/adminprofile" element={<AdminProfile />} />
+                <Route path="/Dashboard" element={<Dashboard />}/>
+                <Route path="/bookmark" element={<Bookmark />} />
             </Routes>
         </div>
     );
