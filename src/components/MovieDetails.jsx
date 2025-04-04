@@ -12,8 +12,8 @@ const MovieDetails = () => {
         { id: 2, user: 'Guest456', comment: 'Loved the plot twists', rating: 5, date: '2024-03-16' }
     ]);
 
-    // YouTube Video URL - Ganti dengan URL trailer film yang sesuai
-    const youtubeVideoId = "https://youtu.be/uLtkt8BonwM?si=B3QERuHH9pfq8_q6"; // Contoh ID video dari YouTube
+    // URL YouTube yang diperbaiki - menggunakan ID trailer yang valid
+    const youtubeVideoId = "https://youtu.be/uLtkt8BonwM?si=ZUFQaCvt1K2exDeQ"; // Ganti dengan ID video YouTube yang sesuai
 
     const handleSubmitReview = (e) => {
         e.preventDefault();
@@ -41,34 +41,44 @@ const MovieDetails = () => {
 
     const styles = {
         container: {
-            maxWidth: '1000px',
+            maxWidth: '1200px',
             margin: '0 auto',
-            padding: '20px',
+            padding: '30px',
             color: '#fff',
-            backgroundColor: '#141414'
+            backgroundColor: '#141414',
+            borderRadius: '12px',
+            boxShadow: '0 8px 20px rgba(0,0,0,0.2)'
         },
         header: {
             display: 'flex',
-            gap: '30px',
-            marginBottom: '40px'
+            gap: '40px',
+            marginBottom: '50px',
+            alignItems: 'flex-start'
         },
         posterContainer: {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '15px'
+            gap: '15px',
+            minWidth: '300px'
         },
         poster: {
-            width: '280px',
-            height: '400px',
+            width: '300px',
+            height: '450px',
             objectFit: 'cover',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.4)'
+            borderRadius: '12px',
+            boxShadow: '0 8px 16px rgba(0,0,0,0.6)'
         },
         rating: {
             fontSize: '24px',
+            fontWeight: 'bold',
             color: '#f5c518',
-            textAlign: 'center'
+            textAlign: 'center',
+            backgroundColor: 'rgba(0,0,0,0.3)',
+            padding: '10px 15px',
+            borderRadius: '8px',
+            marginTop: '10px',
+            width: '100%'
         },
         info: {
             flex: 1,
@@ -76,18 +86,39 @@ const MovieDetails = () => {
             flexDirection: 'column'
         },
         title: {
-            fontSize: '36px',
+            fontSize: '42px',
+            fontWeight: 'bold',
             marginBottom: '25px',
-            color: '#fff'
+            color: '#fff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+        },
+        detailsRow: {
+            display: 'flex',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap',
+            gap: '15px',
+            marginBottom: '25px',
+            fontSize: '16px',
+            color: '#ccc'
+        },
+        detailItem: {
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            padding: '8px 15px',
+            borderRadius: '20px',
+            display: 'inline-block'
         },
         synopsis: {
-            fontSize: '16px',
+            fontSize: '18px',
             lineHeight: '1.8',
             marginBottom: '30px',
-            color: '#e5e5e5'
+            color: '#e5e5e5',
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            padding: '20px',
+            borderRadius: '10px',
+            borderLeft: '4px solid #E50914'
         },
         videoSection: {
-            margin: '20px 0 40px 0'
+            margin: '30px 0 50px 0'
         },
         videoContainer: {
             position: 'relative',
@@ -96,7 +127,8 @@ const MovieDetails = () => {
             overflow: 'hidden',
             maxWidth: '100%',
             backgroundColor: '#000',
-            borderRadius: '8px'
+            borderRadius: '12px',
+            boxShadow: '0 8px 16px rgba(0,0,0,0.4)'
         },
         videoFrame: {
             position: 'absolute',
@@ -105,57 +137,70 @@ const MovieDetails = () => {
             width: '100%',
             height: '100%',
             border: 'none',
-            borderRadius: '8px'
+            borderRadius: '12px'
         },
         reviewSection: {
-            width: '70%',
+            width: '90%',
             margin: '0 auto',
-            marginTop: '40px',
-            borderTop: '2px solid #333',
-            padding: '20px 0'
+            marginTop: '50px',
+            borderTop: '3px solid #333',
+            padding: '30px 0'
         },
         reviewForm: {
             backgroundColor: '#1f1f1f',
-            padding: '15px',
-            borderRadius: '8px',
-            marginBottom: '20px'
+            padding: '25px',
+            borderRadius: '12px',
+            marginBottom: '30px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
         },
         input: {
             width: '100%',
-            padding: '8px',
-            marginBottom: '10px',
-            borderRadius: '4px',
-            border: '1px solid #333',
+            padding: '12px 15px',
+            marginBottom: '15px',
+            borderRadius: '8px',
+            border: '1px solid #444',
             backgroundColor: '#2d2d2d',
-            color: '#fff'
+            color: '#fff',
+            fontSize: '16px'
         },
         commentList: {
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px'
+            gap: '15px'
         },
         comment: {
-            padding: '12px',
+            padding: '20px',
             backgroundColor: '#1f1f1f',
-            borderRadius: '6px',
-            borderLeft: '3px solid #E50914',
-            fontSize: '14px',
-            color: '#e5e5e5'
+            borderRadius: '10px',
+            borderLeft: '5px solid #E50914',
+            fontSize: '16px',
+            color: '#e5e5e5',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
         },
         button: {
-            background: '#E50914',
+            background: 'linear-gradient(135deg, #E50914, #B20710)',
             border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
+            padding: '12px 20px',
+            borderRadius: '8px',
             cursor: 'pointer',
             fontWeight: 'bold',
+            fontSize: '16px',
             color: '#fff',
-            transition: 'background 0.2s'
+            transition: 'transform 0.2s, box-shadow 0.2s',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.3)'
+        },
+        buttonHover: {
+            transform: 'translateY(-2px)',
+            boxShadow: '0 6px 12px rgba(0,0,0,0.4)'
         },
         sectionTitle: {
-            fontSize: '24px',
-            marginBottom: '15px',
-            color: '#fff'
+            fontSize: '28px',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            color: '#fff',
+            borderBottom: '3px solid #E50914',
+            paddingBottom: '10px',
+            display: 'inline-block'
         }
     };
 
@@ -173,7 +218,16 @@ const MovieDetails = () => {
                     </div>
                 </div>
                 <div style={styles.info}>
-                    <h1 style={styles.title}>Death of a unicorn</h1>
+                    <h1 style={styles.title}>Death of a Unicorn</h1>
+                    
+                    <div style={styles.detailsRow}>
+                        <span style={styles.detailItem}>2024</span>
+                        <span style={styles.detailItem}>143 min</span>
+                        <span style={styles.detailItem}>Drama</span>
+                        <span style={styles.detailItem}>Fantasy</span>
+                        <span style={styles.detailItem}>Adventure</span>
+                    </div>
+                    
                     <p style={styles.synopsis}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
@@ -186,16 +240,25 @@ const MovieDetails = () => {
                         doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
                         veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                     </p>
+                    
+                    <div style={{display: 'flex', gap: '15px'}}>
+                        <button style={{...styles.button, backgroundColor: '#E50914'}}>
+                            ▶ Watch Now
+                        </button>
+                        <button style={{...styles.button, backgroundColor: '#333'}}>
+                            + Add to Watchlist
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Bagian Video YouTube */}
+            {/* Bagian Video YouTube - Diperbaiki */}
             <div style={styles.videoSection}>
                 <h2 style={styles.sectionTitle}>Official Trailer</h2>
                 <div style={styles.videoContainer}>
                     <iframe 
                         style={styles.videoFrame}
-                        src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                        src={`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&showinfo=0`}
                         title="Movie Trailer"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
@@ -204,7 +267,7 @@ const MovieDetails = () => {
             </div>
 
             <div style={styles.reviewSection}>
-                <h2 style={{ color: '#fff' }}>Reviews & Comments</h2>
+                <h2 style={styles.sectionTitle}>Reviews & Comments</h2>
                 <form style={styles.reviewForm} onSubmit={handleSubmitReview}>
                     <input
                         type="text"
@@ -220,18 +283,19 @@ const MovieDetails = () => {
                         placeholder="Write your review..."
                         rows="4"
                     />
-                    <div style={{ marginBottom: '10px', color: '#fff' }}>
+                    <div style={{ marginBottom: '15px', color: '#fff', fontSize: '16px' }}>
                         <label>Rating: </label>
                         <select 
                             value={newRating} 
                             onChange={(e) => setNewRating(Number(e.target.value))}
                             style={{
-                                padding: '5px',
+                                padding: '8px 15px',
                                 marginLeft: '10px',
-                                borderRadius: '3px',
-                                border: '1px solid #333',
+                                borderRadius: '6px',
+                                border: '1px solid #444',
                                 backgroundColor: '#2d2d2d',
-                                color: '#fff'
+                                color: '#fff',
+                                fontSize: '16px'
                             }}
                         >
                             {[1,2,3,4,5].map(num => (
@@ -239,7 +303,18 @@ const MovieDetails = () => {
                             ))}
                         </select>
                     </div>
-                    <button type="submit" style={styles.button}>
+                    <button 
+                        type="submit" 
+                        style={styles.button}
+                        onMouseOver={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+                        }}
+                    >
                         Post Review as Guest
                     </button>
                 </form>
@@ -247,10 +322,34 @@ const MovieDetails = () => {
                 <div style={styles.commentList}>
                     {comments.map(comment => (
                         <div key={comment.id} style={styles.comment}>
-                            <div style={{ fontWeight: 'bold', color: '#fff' }}>{comment.user}</div>
-                            <div style={{ color: '#f5c518' }}>{'★'.repeat(comment.rating)}{'☆'.repeat(5-comment.rating)}</div>
-                            <div>{comment.comment}</div>
-                            <div style={{ fontSize: '0.8em', color: '#888' }}>{comment.date}</div>
+                            <div style={{ 
+                                fontWeight: 'bold', 
+                                color: '#fff', 
+                                fontSize: '18px',
+                                marginBottom: '8px'
+                            }}>
+                                {comment.user}
+                            </div>
+                            <div style={{ 
+                                color: '#f5c518', 
+                                fontSize: '20px',
+                                marginBottom: '10px'
+                            }}>
+                                {'★'.repeat(comment.rating)}{'☆'.repeat(5-comment.rating)}
+                            </div>
+                            <div style={{marginBottom: '10px', lineHeight: '1.6'}}>
+                                {comment.comment}
+                            </div>
+                            <div style={{ 
+                                fontSize: '14px', 
+                                color: '#888',
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                padding: '5px 10px',
+                                borderRadius: '4px',
+                                display: 'inline-block'
+                            }}>
+                                {comment.date}
+                            </div>
                         </div>
                     ))}
                 </div>

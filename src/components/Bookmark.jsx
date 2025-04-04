@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Bookmark = ({ bookmarkedMovies = [] }) => {
+const Bookmark = () => {
+    const navigate = useNavigate();
+    const [bookmarks, setBookmarks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        // Remove old styles if they exist
+        // Add custom styles from second component
         const existingStyle = document.getElementById("bookmark-styles");
         if (existingStyle) {
             existingStyle.remove();
         }
 
         const styles = `
-      .bookmark-wrapper {
+      .bookmarks-container {
         padding: 24px;
         background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
         color: white;
@@ -18,11 +23,11 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         transition: all 0.3s ease;
       }
       
-      .bookmark-wrapper:hover {
+      .bookmarks-container:hover {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); 
       }
       
-      .bookmark-title {
+      .bookmarks-title {
         font-size: 28px;
         margin-bottom: 24px;
         text-align: center;
@@ -32,7 +37,7 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         color: #e9e9e9;
       }
       
-      .bookmark-title:after {
+      .bookmarks-title:after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -44,7 +49,7 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         border-radius: 2px;
       }
       
-      .empty-message {
+      .empty-state {
         font-size: 18px;
         color: #aaa;
         text-align: center;
@@ -52,7 +57,7 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         animation: fadeIn 1s ease-in-out;
       }
       
-      .bookmark-container {
+      .bookmarks-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 24px;
@@ -74,7 +79,7 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
       }
       
-      .image-container {
+      .bookmark-image-container {
         width: 100%;
         height: 300px;
         overflow: hidden;
@@ -92,7 +97,7 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         transform: scale(1.1);
       }
       
-      .item-details {
+      .bookmark-details {
         padding: 16px;
         position: relative;
       }
@@ -104,24 +109,25 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         color: #e9e9e9;
       }
       
-      .rating {
+      .bookmark-rating {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 5px;
         font-size: 16px;
+        margin-bottom: 12px;
       }
       
-      .rating i {
+      .bookmark-rating i {
         color: gold;
         transition: all 0.3s ease;
       }
       
-      .bookmark-item:hover .rating i {
+      .bookmark-item:hover .bookmark-rating i {
         transform: rotate(360deg);
       }
       
-      .delete-button {
+      .remove-bookmark-button {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -139,8 +145,98 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         transition: all 0.3s ease;
       }
       
-      .bookmark-item:hover .delete-button {
+      .bookmark-item:hover .remove-bookmark-button {
         opacity: 1;
+      }
+
+      .bookmark-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: space-between;
+      }
+
+      .add-to-watchlist-button, .play-trailer-button {
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .add-to-watchlist-button {
+        background-color: #ff6b6b;
+        color: white;
+      }
+
+      .play-trailer-button {
+        background-color: #4a4a4a;
+        color: white;
+      }
+
+      .add-to-watchlist-button:hover, .play-trailer-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      .bookmarks-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .back-button {
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+        margin-right: 20px;
+      }
+
+      .back-button:hover {
+        background-color: #444;
+      }
+
+      .browse-button {
+        background-color: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .browse-button:hover {
+        background-color: #ff5252;
+        transform: translateY(-2px);
+      }
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        padding: 40px 0;
+      }
+      
+      .loading::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        margin: 0 6px;
+        border-radius: 50%;
+        background-color: #ff6b6b;
+        animation: bounce 1.4s infinite ease-in-out both;
       }
       
       @keyframes fadeIn {
@@ -154,25 +250,6 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         }
       }
       
-      /* Loading animation for when items are being fetched */
-      .loading {
-        display: flex;
-        justify-content: center;
-        padding: 40px 0;
-      }
-      
-      .loading-dot {
-        width: 12px;
-        height: 12px;
-        margin: 0 6px;
-        border-radius: 50%;
-        background-color: #ff6b6b;
-        animation: bounce 1.4s infinite ease-in-out both;
-      }
-      
-      .loading-dot:nth-child(1) { animation-delay: -0.32s; }
-      .loading-dot:nth-child(2) { animation-delay: -0.16s; }
-      
       @keyframes bounce {
         0%, 80%, 100% { transform: scale(0); }
         40% { transform: scale(1.0); }
@@ -185,45 +262,138 @@ const Bookmark = ({ bookmarkedMovies = [] }) => {
         styleSheet.innerText = styles;
         document.head.appendChild(styleSheet);
 
+        // Load bookmarks from localStorage
+        const loadBookmarks = () => {
+            setIsLoading(true);
+            const savedBookmarks = localStorage.getItem('bookmarksArray');
+            
+            if (savedBookmarks) {
+                const parsedBookmarks = JSON.parse(savedBookmarks);
+                // Sort by date added (newest first)
+                parsedBookmarks.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+                setBookmarks(parsedBookmarks);
+            }
+            
+            setIsLoading(false);
+        };
+
+        loadBookmarks();
+
         return () => {
             styleSheet.remove(); // Remove style when component unmounts
         };
     }, []);
 
-    return (
-        <div className="bookmark-wrapper">
-            <h2 className="bookmark-title">Bookmarked Movies</h2>
+    // Remove item from bookmarks
+    const removeFromBookmarks = (id) => {
+        // Get current bookmarked status
+        const currentBookmarked = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+        delete currentBookmarked[id];
+        localStorage.setItem('bookmarks', JSON.stringify(currentBookmarked));
+        
+        // Update bookmarksArray
+        const updatedBookmarks = bookmarks.filter(item => item.id !== id);
+        setBookmarks(updatedBookmarks);
+        localStorage.setItem('bookmarksArray', JSON.stringify(updatedBookmarks));
+        
+        alert("Removed from bookmarks");
+    };
 
-            {bookmarkedMovies.length === 0 ? (
-                <div className="empty-message">
-                    No movies bookmarked yet. Start exploring and save your favorites!
+    // Add to watchlist
+    const addToWatchlist = (item) => {
+        // Get current watchlist array
+        let watchlistArray = JSON.parse(localStorage.getItem('watchlistArray') || '[]');
+        
+        // Check if item is already in watchlist
+        if (!watchlistArray.some(watchItem => watchItem.id === item.id)) {
+            // Add the item
+            watchlistArray.push({
+                ...item,
+                dateAdded: new Date().toISOString()
+            });
+            
+            // Save the updated array
+            localStorage.setItem('watchlistArray', JSON.stringify(watchlistArray));
+            
+            // Update watchlist status object
+            const watchlistStatus = JSON.parse(localStorage.getItem('watchlist') || '{}');
+            watchlistStatus[item.id] = true;
+            localStorage.setItem('watchlist', JSON.stringify(watchlistStatus));
+            
+            // Show notification
+            alert(`Added to watchlist: ${item.name}`);
+        } else {
+            alert(`${item.name} is already in your watchlist`);
+        }
+    };
+
+    // Go back to main page
+    const goBack = () => {
+        navigate(-1);
+    };
+
+    return (
+        <div className="bookmarks-container">
+            <div className="bookmarks-header">
+                <button className="back-button" onClick={goBack}>
+                    <i className="fa fa-arrow-left"></i> Back
+                </button>
+                <h1 className="bookmarks-title">My Bookmarks</h1>
+            </div>
+
+            {isLoading ? (
+                <div className="loading">Loading your bookmarks...</div>
+            ) : bookmarks.length === 0 ? (
+                <div className="empty-state">
+                    <i className="fa fa-bookmark-o empty-icon"></i>
+                    <p>No movies bookmarked yet. Start exploring and save your favorites!</p>
+                    <button className="browse-button" onClick={goBack}>Browse Movies</button>
                 </div>
             ) : (
-                <div className="bookmark-container">
-                    {bookmarkedMovies.map((movie, index) => (
-                        <div
+                <div className="bookmarks-grid">
+                    {bookmarks.map((item, index) => (
+                        <div 
+                            key={item.id} 
                             className="bookmark-item"
-                            key={index}
                             style={{
                                 animationDelay: `${index * 0.1}s`,
                                 animation: 'fadeIn 0.5s ease-in-out forwards'
                             }}
                         >
-                            <div className="image-container">
-                                <img
-                                    src={movie.image || 'https://via.placeholder.com/200x300'}
-                                    alt={movie.name}
-                                    className="bookmark-image"
+                            <div className="bookmark-image-container">
+                                <img 
+                                    src={item.image || 'https://via.placeholder.com/200x300'} 
+                                    alt={item.name} 
+                                    className="bookmark-image" 
                                 />
-                                <button className="delete-button">
-                                    <i className="fas fa-trash"></i>
+                                <button
+                                    className="remove-bookmark-button"
+                                    onClick={() => removeFromBookmarks(item.id)}
+                                    aria-label="Remove from bookmarks"
+                                >
+                                    <i className="fa fa-times"></i>
                                 </button>
                             </div>
-                            <div className="item-details">
-                                <h3 className="bookmark-name">{movie.name}</h3>
-                                <div className="rating">
-                                    <i className="fas fa-star"></i>
-                                    <span>{movie.rating}</span>
+
+                            <div className="bookmark-details">
+                                <h3 className="bookmark-name">{item.name}</h3>
+                                
+                                <div className="bookmark-rating">
+                                    <i className="fa fa-star"></i>
+                                    <span>{item.rating}</span>
+                                </div>
+
+                                <div className="bookmark-actions">
+                                    <button 
+                                        className="add-to-watchlist-button"
+                                        onClick={() => addToWatchlist(item)}
+                                    >
+                                        <i className="fa fa-plus"></i> Add to Watchlist
+                                    </button>
+                                    
+                                    <button className="play-trailer-button">
+                                        <i className="fa fa-play-circle"></i> Trailer
+                                    </button>
                                 </div>
                             </div>
                         </div>

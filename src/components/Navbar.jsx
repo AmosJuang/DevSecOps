@@ -45,6 +45,10 @@ const Navbar = () => {
     const handleSignInClick = () => {
         navigate("/signin");
     };
+    
+    const handleBookmarkInClick = () => {
+        navigate("/bookmark");
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -197,6 +201,7 @@ const Navbar = () => {
                                         transform: "scale(1.1)"
                                     }
                                 }}
+                                onClick={handleBookmarkInClick}
                             >
                                 <BookmarkBorderIcon />
                             </IconButton>
