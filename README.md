@@ -1,12 +1,57 @@
-# React + Vite
+Berikut adalah isi file `README.md` dalam format markdown yang sederhana dan bersih, tanpa terlalu banyak gaya atau emoji:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```markdown
+# RealRate
 
-Currently, two official plugins are available:
+RealRate adalah aplikasi web yang terinspirasi dari IMDB, memungkinkan pengguna untuk menilai dan mereview film. Aplikasi ini dibangun menggunakan **React.js + Vite** di sisi frontend dan **Node.js** di sisi backend. Proyek ini menggunakan Docker untuk memudahkan proses pengembangan dan deployment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prasyarat
 
-## Expanding the ESLint configuration
+- Docker
+- Node.js (opsional, jika ingin menjalankan backend di luar container)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Menjalankan Aplikasi
+
+### Mode Developer
+
+1. **Build Docker Image:**
+
+   ```bash
+   docker build -t reactjs/devsecops:1.0.0 .
+   ```
+
+2. **Cek image yang telah dibuat:**
+
+   ```bash
+   docker image ls
+   ```
+
+3. **Jalankan container dalam mode developer:**
+
+   ```bash
+   docker run -d -p 3000:3000 reactjs/devsecops:1.0.0
+   ```
+
+   Aplikasi akan dapat diakses di: `http://localhost:3000`
+
+### Mode Pre-Production (Staging)
+
+1. **Build image pre-production:**
+
+   ```bash
+   docker build -t reactjs-stg/devsecops:1.0.0 -f Dockerfile.stg .
+   ```
+
+2. **Jalankan container staging:**
+
+   ```bash
+   docker run -d -p 3001:3001 reactjs-stg/devsecops:1.0.0
+   ```
+
+   Aplikasi akan dapat diakses di: `http://localhost:3001`
+
+## Teknologi
+
+- Frontend: React.js + Vite
+- Backend: Node.js
+- Containerization: Docker
