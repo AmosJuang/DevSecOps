@@ -11,6 +11,9 @@ import Profile from './components/Profile';
 import AdminProfile from './components/AdminProfile';
 import Dashboard from './pages/Dashboard';
 import Bookmark from './components/Bookmark';
+import Watchlist from './components/WatchList';
+import Trailer from './components/Trailer';
+import axios from "axios";
 
 function AppContent() {
     const location = useLocation();
@@ -28,14 +31,27 @@ function AppContent() {
                 <Route path="/movie/:id" element={<MovieDetails />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/adminprofile" element={<AdminProfile />} />
-                <Route path="/Dashboard" element={<Dashboard />}/>
+                <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/bookmark" element={<Bookmark />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+                <Route path="/trailer" element={<Trailer />} />
             </Routes>
         </div>
     );
 }
 
 function App() {
+    // const [message, setMessage] = React.useState("");
+
+    // useEffect(() => {
+    //     axios.get("http://localhost:5000/api/hello")
+    //         .then((response) => {
+    //             setMessage(response.data.message);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching data:", error);
+    //         });
+    // }, []);
     return (
         <Router>
             <AppContent />
