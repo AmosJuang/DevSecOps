@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
 import "./Register.css"; // Pastikan untuk membuat file CSS ini
 
 const Register = () => {
@@ -11,6 +12,8 @@ const Register = () => {
         confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [apiError, setApiError] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,11 +45,28 @@ const Register = () => {
         return Object.keys(tempErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log('Registration successful!');
-            navigate('/signin');
+            try {
+                setIsLoading(true);
+                setApiError("");
+                
+                const userData = {
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password
+                };
+
+                await register(userData);
+                console.log('Registration successful!');
+                navigate('/signin');
+            } catch (error) {
+                setApiError(error.message || 'Registration failed. Please try again.');
+                console.error('Registration error:', error);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -63,6 +83,7 @@ const Register = () => {
                 <div className="form-wrapper">
                     <h1 className="title">Register Akun</h1>
                     <form onSubmit={handleSubmit}>
+                        {apiError && <p className="error-text api-error">{apiError}</p>}
                         <div className="form-group">
                             <label className="form-label">Your name</label>
                             <input
@@ -112,8 +133,12 @@ const Register = () => {
                             {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
                         </div>
 
-                        <button type="submit" className="submit-button">
-                            Create your account
+                        <button 
+                            type="submit" 
+                            className="submit-button"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Creating account...' : 'Create your account'}
                         </button>
                     </form>
 
