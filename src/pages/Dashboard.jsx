@@ -20,7 +20,10 @@ import {
     Grow,
     Fade,
     Zoom,
-    Divider
+    Avatar,
+    Chip,
+    Rating,
+    Container
 } from '@mui/material';
 import MovieIcon from '@mui/icons-material/Movie';
 import EditIcon from '@mui/icons-material/Edit';
@@ -30,13 +33,18 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import ImageIcon from '@mui/icons-material/Image';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import TheatersIcon from '@mui/icons-material/Theaters';
+import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
-// Data contoh untuk grafik pengunjung
+// Example data for visitor chart
 const generateVisitorData = () => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const currentMonth = new Date().getMonth();
 
-    return months.slice(0, currentMonth + 1).map((month, index) => {
+    return months.slice(0, currentMonth + 1).map((month) => {
         const baseVisitors = 1000 + Math.floor(Math.random() * 2000);
         const mobileVisitors = Math.floor(baseVisitors * 0.6);
         const desktopVisitors = baseVisitors - mobileVisitors;
@@ -50,7 +58,7 @@ const generateVisitorData = () => {
     });
 };
 
-// Data untuk grafik pie populasi pengunjung berdasarkan film
+// Data for pie chart of visitor population by movie
 const generateMovieViewsData = (movies) => {
     return movies.map(movie => ({
         name: movie.title,
@@ -58,8 +66,8 @@ const generateMovieViewsData = (movies) => {
     }));
 };
 
-// Warna untuk grafik
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
+// Colors for charts
+const COLORS = ['#3f51b5', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
 
 // Custom BarChart component using HTML/CSS instead of Recharts
 const SimpleBarChart = ({ data }) => {
@@ -83,7 +91,7 @@ const SimpleBarChart = ({ data }) => {
                             sx={{
                                 width: '100%',
                                 height: `${(item.total / maxValue) * 100}%`,
-                                backgroundColor: '#8884d8',
+                                background: 'linear-gradient(to top, #3f51b5, #7986cb)',
                                 borderRadius: '4px 4px 0 0',
                                 transition: 'height 1s ease-in-out',
                                 display: 'flex',
@@ -93,12 +101,13 @@ const SimpleBarChart = ({ data }) => {
                                 color: 'white',
                                 fontSize: '0.75rem',
                                 fontWeight: 'bold',
-                                pb: 0.5
+                                pb: 0.5,
+                                boxShadow: '0 2px 6px rgba(63, 81, 181, 0.3)'
                             }}
                         >
                             {item.total}
                         </Box>
-                        <Typography sx={{ mt: 1, fontSize: '0.75rem' }}>{item.name}</Typography>
+                        <Typography sx={{ mt: 1, fontSize: '0.75rem', fontWeight: 'medium' }}>{item.name}</Typography>
                     </Box>
                 ))}
             </Box>
@@ -118,7 +127,8 @@ const SimplePieChart = ({ data }) => {
                 position: 'relative',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                mb: 2
+                mb: 2,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
             }}>
                 {data.map((item, index) => {
                     const percentage = (item.value / total) * 100;
@@ -143,7 +153,9 @@ const SimplePieChart = ({ data }) => {
                 {data.map((item, index) => (
                     <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                         <Box sx={{ width: 16, height: 16, backgroundColor: COLORS[index % COLORS.length], mr: 1, borderRadius: 1 }} />
-                        <Typography variant="body2">{item.name}: {((item.value / total) * 100).toFixed(1)}% ({item.value} views)</Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                            {item.name}: {((item.value / total) * 100).toFixed(1)}% ({item.value} views)
+                        </Typography>
                     </Box>
                 ))}
             </Box>
@@ -155,6 +167,10 @@ const Dashboard = () => {
     const [movies, setMovies] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [rating, setRating] = useState(3.5);
+    const [genre, setGenre] = useState('');
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState('');
     const [editingIndex, setEditingIndex] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [tabValue, setTabValue] = useState(0);
@@ -162,70 +178,121 @@ const Dashboard = () => {
     const [movieViewsData, setMovieViewsData] = useState([]);
     const [animateCharts, setAnimateCharts] = useState(false);
 
-    // Inisialisasi data contoh saat komponen dimuat
+    // Initialize example data when the component is loaded
     useEffect(() => {
-        // Data film contoh
+        // Example movie data with placeholder images
         const sampleMovies = [
-            { title: 'Avengers: Endgame', description: 'Superhero film based on Marvel Comics' },
-            { title: 'Parasite', description: 'South Korean black comedy thriller film' },
-            { title: 'The Shawshank Redemption', description: 'Drama film based on a Stephen King novella' }
+            {
+                title: 'Avengers: Endgame',
+                description: 'Superhero film based on Marvel Comics',
+                genre: 'Action/Sci-Fi',
+                rating: 4.8,
+                image: 'https://via.placeholder.com/150/3f51b5/FFFFFF?text=Avengers'
+            },
+            {
+                title: 'Parasite',
+                description: 'South Korean black comedy thriller film',
+                genre: 'Thriller/Drama',
+                rating: 4.6,
+                image: 'https://via.placeholder.com/150/00C49F/FFFFFF?text=Parasite'
+            },
+            {
+                title: 'The Shawshank Redemption',
+                description: 'Drama film based on a Stephen King novella',
+                genre: 'Drama',
+                rating: 4.9,
+                image: 'https://via.placeholder.com/150/FFBB28/FFFFFF?text=Shawshank'
+            }
         ];
         setMovies(sampleMovies);
 
-        // Data pengunjung
+        // Visitor data
         setVisitorData(generateVisitorData());
 
-        // Animasi setelah komponen dimuat
+        // Animation after the component is loaded
         setTimeout(() => {
             setAnimateCharts(true);
         }, 300);
     }, []);
 
-    // Update data grafik pie saat film diperbarui
+    // Update pie chart data when movies are updated
     useEffect(() => {
         if (movies.length > 0) {
             setMovieViewsData(generateMovieViewsData(movies));
         }
     }, [movies]);
 
-    // Menangani perubahan tab
-    const handleTabChange = (event, newValue) => {
+    // Handle tab change
+    const handleTabChange = (_, newValue) => {
         setTabValue(newValue);
     };
 
-    // Menangani form submit (untuk menambah atau mengedit film)
+    // Handle image file change
+    const handleImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            const selectedFile = event.target.files[0];
+            setImage(selectedFile);
+
+            // Create preview URL
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImagePreview(e.target.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
+    // Handle form submission (to add or edit a movie)
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // Prepare movie object with image
+        const movieData = {
+            title,
+            description,
+            genre,
+            rating,
+            image: imagePreview || (editingIndex !== null ? movies[editingIndex].image : 'https://via.placeholder.com/150/cccccc/FFFFFF?text=No+Image')
+        };
+
         if (editingIndex !== null) {
             const updatedMovies = movies.map((movie, index) =>
-                index === editingIndex ? { ...movie, title, description } : movie
+                index === editingIndex ? movieData : movie
             );
             setMovies(updatedMovies);
             setEditingIndex(null);
         } else {
-            const newMovie = { title, description };
-            setMovies([...movies, newMovie]);
+            setMovies([...movies, movieData]);
         }
+
+        // Reset form
         setTitle('');
         setDescription('');
+        setGenre('');
+        setRating(3.5);
+        setImage(null);
+        setImagePreview('');
         setShowForm(false);
     };
 
-    // Menangani edit film
+    // Handle movie edit
     const handleEdit = (index) => {
         setTitle(movies[index].title);
         setDescription(movies[index].description);
+        setGenre(movies[index].genre || '');
+        setRating(movies[index].rating || 3.5);
+        setImagePreview(movies[index].image);
         setEditingIndex(index);
         setShowForm(true);
     };
 
-    // Menangani hapus film
+    // Handle movie deletion
     const handleDelete = (index) => {
-        const updatedMovies = movies.filter((movie, movieIndex) => movieIndex !== index);
+        const updatedMovies = movies.filter((_, movieIndex) => movieIndex !== index);
         setMovies(updatedMovies);
     };
 
-    // Line chart data untuk visualisasi trend
+    // Line chart data for trend visualization
     const getMonthlyData = () => {
         return visitorData.map((item, index) => {
             const mobileHeight = (item.mobile / item.total) * 100;
@@ -236,18 +303,20 @@ const Dashboard = () => {
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', height: 200 }}>
                         <Box sx={{
                             height: `${mobileHeight}%`,
-                            backgroundColor: '#82ca9d',
+                            background: 'linear-gradient(to top, #00C49F, #00E676)',
                             width: '100%',
-                            transition: 'height 0.8s ease-in-out'
+                            transition: 'height 0.8s ease-in-out',
+                            borderRadius: '2px 2px 0 0'
                         }} />
                         <Box sx={{
                             height: `${desktopHeight}%`,
-                            backgroundColor: '#8884d8',
+                            background: 'linear-gradient(to top, #3f51b5, #7986cb)',
                             width: '100%',
-                            transition: 'height 0.8s ease-in-out'
+                            transition: 'height 0.8s ease-in-out',
+                            borderRadius: '2px 2px 0 0'
                         }} />
                     </Box>
-                    <Typography variant="caption" sx={{ mt: 0.5 }}>{item.name}</Typography>
+                    <Typography variant="caption" sx={{ mt: 0.5, fontWeight: 'medium' }}>{item.name}</Typography>
                 </Box>
             );
         });
@@ -255,385 +324,575 @@ const Dashboard = () => {
 
     return (
         <Box sx={{
-            padding: '20px',
+            padding: { xs: '10px', sm: '20px' },
             background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%)',
             minHeight: '100vh'
         }}>
             <Fade in={true} timeout={800}>
-                <Paper
-                    elevation={3}
-                    sx={{
-                        padding: '20px',
-                        borderRadius: '12px',
-                        background: 'rgba(255, 255, 255, 0.95)',
-                        boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.07)'
-                    }}
-                >
-                    <Typography
-                        variant="h4"
-                        gutterBottom
+                <Container maxWidth="xl">
+                    <Paper
+                        elevation={3}
                         sx={{
-                            fontWeight: 'bold',
-                            display: 'flex',
-                            alignItems: 'center',
-                            color: '#1a237e',
-                            mb: 3
+                            padding: { xs: '15px', sm: '20px', md: '30px' },
+                            borderRadius: '16px',
+                            background: 'rgba(255, 255, 255, 0.95)',
+                            boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.07)'
                         }}
                     >
-                        <MovieIcon sx={{ mr: 1, fontSize: 36 }} />
-                        Admin Dashboard - Movie Management
-                    </Typography>
+                        <Typography
+                            variant="h4"
+                            gutterBottom
+                            sx={{
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                color: '#3f51b5',
+                                mb: 3,
+                                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+                            }}
+                        >
+                            <TheatersIcon sx={{ mr: 1, fontSize: { xs: 28, sm: 36 } }} />
+                            Admin Dashboard - Movie Management
+                        </Typography>
 
-                    <Tabs
-                        value={tabValue}
-                        onChange={handleTabChange}
-                        centered
-                        sx={{
-                            mb: 3,
-                            '& .MuiTab-root': {
-                                minWidth: '120px',
-                                fontWeight: 'bold'
-                            }
-                        }}
-                    >
-                        <Tab icon={<BarChartIcon />} label="Analytics" />
-                        <Tab icon={<MovieIcon />} label="Movies" />
-                    </Tabs>
+                        <Tabs
+                            value={tabValue}
+                            onChange={handleTabChange}
+                            centered
+                            sx={{
+                                mb: 3,
+                                '& .MuiTab-root': {
+                                    minWidth: '120px',
+                                    fontWeight: 'bold',
+                                    fontSize: { xs: '0.8rem', sm: '0.875rem' }
+                                },
+                                '& .Mui-selected': {
+                                    color: '#3f51b5'
+                                },
+                                '& .MuiTabs-indicator': {
+                                    backgroundColor: '#3f51b5'
+                                }
+                            }}
+                        >
+                            <Tab icon={<BarChartIcon />} label="Analytics" />
+                            <Tab icon={<LocalMoviesIcon />} label="Movies" />
+                        </Tabs>
 
-                    {/* Analytics Tab */}
-                    {tabValue === 0 && (
-                        <Box>
-                            <Grid container spacing={3}>
-                                {/* Summary Cards */}
-                                <Grid item xs={12} md={4}>
-                                    <Zoom in={animateCharts} timeout={500}>
-                                        <Card sx={{ height: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
-                                                    <VisibilityIcon sx={{ mr: 1 }} /> Total Visitors
-                                                </Typography>
-                                                <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#0088FE', mb: 2 }}>
-                                                    {visitorData.reduce((sum, item) => sum + item.total, 0).toLocaleString()}
-                                                </Typography>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    Compared to last month: <span style={{ color: '#00C49F', fontWeight: 'bold' }}>+12.5%</span>
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
+                        {/* Analytics Tab */}
+                        {tabValue === 0 && (
+                            <Box>
+                                <Grid container spacing={3}>
+                                    {/* Summary Cards */}
+                                    <Grid item xs={12} md={4}>
+                                        <Zoom in={animateCharts} timeout={500}>
+                                            <Card sx={{ height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #3f51b5 0%, #7986cb 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
+                                                        <VisibilityIcon sx={{ mr: 1, color: '#3f51b5' }} /> Total Visitors
+                                                    </Typography>
+                                                    <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#3f51b5', mb: 2 }}>
+                                                        {visitorData.reduce((sum, item) => sum + item.total, 0).toLocaleString()}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>
+                                                        <TrendingUpIcon sx={{ mr: 0.5, fontSize: 16, color: '#00C49F' }} />
+                                                        Compared to last month: <span style={{ color: '#00C49F', fontWeight: 'bold', marginLeft: '4px' }}>+12.5%</span>
+                                                    </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
 
-                                <Grid item xs={12} md={4}>
-                                    <Zoom in={animateCharts} timeout={700}>
-                                        <Card sx={{ height: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
-                                                    <MovieIcon sx={{ mr: 1 }} /> Total Movies
-                                                </Typography>
-                                                <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#00C49F', mb: 2 }}>
-                                                    {movies.length}
-                                                </Typography>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    Most popular: {movies.length > 0 ? movies[0].title : 'N/A'}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Zoom in={animateCharts} timeout={700}>
+                                            <Card sx={{ height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #00C49F 0%, #00E676 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
+                                                        <MovieIcon sx={{ mr: 1, color: '#00C49F' }} /> Total Movies
+                                                    </Typography>
+                                                    <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#00C49F', mb: 2 }}>
+                                                        {movies.length}
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        Most popular: {movies.length > 0 ?
+                                                            <Chip
+                                                                size="small"
+                                                                label={movies[0].title}
+                                                                color="primary"
+                                                                variant="outlined"
+                                                                sx={{ ml: 1, fontWeight: 'medium' }}
+                                                            /> : 'N/A'}
+                                                    </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
 
-                                <Grid item xs={12} md={4}>
-                                    <Zoom in={animateCharts} timeout={900}>
-                                        <Card sx={{ height: '100%', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
-                                                    <TimelineIcon sx={{ mr: 1 }} /> Avg. Watch Time
-                                                </Typography>
-                                                <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#FFBB28', mb: 2 }}>
-                                                    86 min
-                                                </Typography>
-                                                <Typography variant="body2" color="text.secondary">
-                                                    Compared to last month: <span style={{ color: '#00C49F', fontWeight: 'bold' }}>+5.2%</span>
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Zoom in={animateCharts} timeout={900}>
+                                            <Card sx={{ height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #FFBB28 0%, #FFC658 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1, display: 'flex', alignItems: 'center' }}>
+                                                        <TimelineIcon sx={{ mr: 1, color: '#FFBB28' }} /> Avg. Watch Time
+                                                    </Typography>
+                                                    <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#FFBB28', mb: 2 }}>
+                                                        86 min
+                                                    </Typography>
+                                                    <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>
+                                                        <TrendingUpIcon sx={{ mr: 0.5, fontSize: 16, color: '#00C49F' }} />
+                                                        Compared to last month: <span style={{ color: '#00C49F', fontWeight: 'bold', marginLeft: '4px' }}>+5.2%</span>
+                                                    </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
 
-                                {/* Bar Chart - Visitors over time */}
-                                <Grid item xs={12} md={8}>
-                                    <Zoom in={animateCharts} timeout={1100}>
-                                        <Card sx={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
-                                                    <BarChartIcon sx={{ mr: 1 }} /> Website Visitors per Month
-                                                </Typography>
-                                                <Box sx={{ height: 350 }}>
-                                                    <SimpleBarChart data={visitorData} />
-                                                </Box>
-
-                                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
-                                                        <Box sx={{ width: 12, height: 12, backgroundColor: '#8884d8', mr: 1, borderRadius: 1 }} />
-                                                        <Typography variant="caption">Total Visitors</Typography>
+                                    {/* Bar Chart - Visitors over time */}
+                                    <Grid item xs={12} md={8}>
+                                        <Zoom in={animateCharts} timeout={1100}>
+                                            <Card sx={{ boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #3f51b5 0%, #7986cb 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
+                                                        <BarChartIcon sx={{ mr: 1, color: '#3f51b5' }} /> Website Visitors per Month
+                                                    </Typography>
+                                                    <Box sx={{ height: 350 }}>
+                                                        <SimpleBarChart data={visitorData} />
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
-                                                        <Box sx={{ width: 12, height: 12, backgroundColor: '#82ca9d', mr: 1, borderRadius: 1 }} />
-                                                        <Typography variant="caption">Mobile</Typography>
-                                                    </Box>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                        <Box sx={{ width: 12, height: 12, backgroundColor: '#ffc658', mr: 1, borderRadius: 1 }} />
-                                                        <Typography variant="caption">Desktop</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
 
-                                {/* Pie Chart - Movie popularity */}
-                                <Grid item xs={12} md={4}>
-                                    <Zoom in={animateCharts} timeout={1300}>
-                                        <Card sx={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
-                                                    <PieChartIcon sx={{ mr: 1 }} /> Movie Popularity
-                                                </Typography>
-                                                <Box sx={{ height: 350 }}>
-                                                    {movieViewsData.length > 0 ? (
-                                                        <SimplePieChart data={movieViewsData} />
-                                                    ) : (
-                                                        <Typography variant="body1">No movie data available</Typography>
-                                                    )}
-                                                </Box>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
-
-                                {/* Monthly Trends */}
-                                <Grid item xs={12}>
-                                    <Zoom in={animateCharts} timeout={1500}>
-                                        <Card sx={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderRadius: '12px' }}>
-                                            <CardContent>
-                                                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
-                                                    <TimelineIcon sx={{ mr: 1 }} /> Monthly Visitors Trend
-                                                </Typography>
-                                                <Box sx={{ display: 'flex', alignItems: 'flex-end', height: 250 }}>
-                                                    {getMonthlyData()}
-                                                </Box>
-                                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
-                                                        <Box sx={{ width: 12, height: 12, backgroundColor: '#8884d8', mr: 1, borderRadius: 1 }} />
-                                                        <Typography variant="caption">Desktop Users</Typography>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, flexWrap: 'wrap' }}>
+                                                        <Chip
+                                                            icon={<Box sx={{ width: 12, height: 12, backgroundColor: '#3f51b5', borderRadius: 1 }} />}
+                                                            label="Total Visitors"
+                                                            variant="outlined"
+                                                            size="small"
+                                                            sx={{ m: 0.5 }}
+                                                        />
+                                                        <Chip
+                                                            icon={<Box sx={{ width: 12, height: 12, backgroundColor: '#00C49F', borderRadius: 1 }} />}
+                                                            label="Mobile"
+                                                            variant="outlined"
+                                                            size="small"
+                                                            sx={{ m: 0.5 }}
+                                                        />
+                                                        <Chip
+                                                            icon={<Box sx={{ width: 12, height: 12, backgroundColor: '#FFBB28', borderRadius: 1 }} />}
+                                                            label="Desktop"
+                                                            variant="outlined"
+                                                            size="small"
+                                                            sx={{ m: 0.5 }}
+                                                        />
                                                     </Box>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                        <Box sx={{ width: 12, height: 12, backgroundColor: '#82ca9d', mr: 1, borderRadius: 1 }} />
-                                                        <Typography variant="caption">Mobile Users</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </CardContent>
-                                        </Card>
-                                    </Zoom>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    )}
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
 
-                    {/* Movies Tab */}
-                    {tabValue === 1 && (
-                        <Box>
-                            {/* Button to show/hide form */}
-                            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<AddIcon />}
-                                    onClick={() => {
-                                        setShowForm(!showForm);
-                                        setTitle('');
-                                        setDescription('');
-                                        setEditingIndex(null);
-                                    }}
-                                    sx={{
-                                        borderRadius: '8px',
-                                        boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
-                                        transition: 'all 0.3s',
-                                        '&:hover': {
-                                            transform: 'translateY(-2px)',
-                                            boxShadow: '0 6px 16px rgba(25, 118, 210, 0.4)',
-                                        }
-                                    }}
-                                >
-                                    {showForm ? 'Cancel' : 'Add New Movie'}
-                                </Button>
+                                    {/* Pie Chart - Movie popularity */}
+                                    <Grid item xs={12} md={4}>
+                                        <Zoom in={animateCharts} timeout={1300}>
+                                            <Card sx={{ boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #3f51b5 0%, #7986cb 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
+                                                        <PieChartIcon sx={{ mr: 1, color: '#3f51b5' }} /> Movie Popularity
+                                                    </Typography>
+                                                    <Box sx={{ height: 350 }}>
+                                                        {movieViewsData.length > 0 ? (
+                                                            <SimplePieChart data={movieViewsData} />
+                                                        ) : (
+                                                            <Typography variant="body1">No movie data available</Typography>
+                                                        )}
+                                                    </Box>
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
+
+                                    {/* Monthly Trends */}
+                                    <Grid item xs={12}>
+                                        <Zoom in={animateCharts} timeout={1500}>
+                                            <Card sx={{ boxShadow: '0 4px 20px rgba(0,0,0,0.08)', borderRadius: '16px', overflow: 'hidden' }}>
+                                                <Box sx={{ height: '8px', background: 'linear-gradient(90deg, #3f51b5 0%, #7986cb 100%)' }} />
+                                                <CardContent sx={{ p: 3 }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, display: 'flex', alignItems: 'center' }}>
+                                                        <TimelineIcon sx={{ mr: 1, color: '#3f51b5' }} /> Monthly Visitors Trend
+                                                    </Typography>
+                                                    <Box sx={{ display: 'flex', alignItems: 'flex-end', height: 250 }}>
+                                                        {getMonthlyData()}
+                                                    </Box>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, flexWrap: 'wrap' }}>
+                                                        <Chip
+                                                            icon={<Box sx={{ width: 12, height: 12, backgroundColor: '#3f51b5', borderRadius: 1 }} />}
+                                                            label="Desktop Users"
+                                                            variant="outlined"
+                                                            size="small"
+                                                            sx={{ m: 0.5 }}
+                                                        />
+                                                        <Chip
+                                                            icon={<Box sx={{ width: 12, height: 12, backgroundColor: '#00C49F', borderRadius: 1 }} />}
+                                                            label="Mobile Users"
+                                                            variant="outlined"
+                                                            size="small"
+                                                            sx={{ m: 0.5 }}
+                                                        />
+                                                    </Box>
+                                                </CardContent>
+                                            </Card>
+                                        </Zoom>
+                                    </Grid>
+                                </Grid>
                             </Box>
+                        )}
 
-                            {/* Form untuk menambah/edit film */}
-                            <Grow in={showForm} unmountOnExit>
-                                <Paper
-                                    sx={{
-                                        padding: '20px',
-                                        marginBottom: '20px',
-                                        borderRadius: '12px',
-                                        boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
-                                    }}
-                                >
-                                    <Typography
-                                        variant="h6"
-                                        gutterBottom
+                        {/* Movies Tab */}
+                        {tabValue === 1 && (
+                            <Box>
+                                {/* Button to show/hide form */}
+                                <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        startIcon={<AddIcon />}
+                                        onClick={() => {
+                                            setShowForm(!showForm);
+                                            setTitle('');
+                                            setDescription('');
+                                            setGenre('');
+                                            setRating(3.5);
+                                            setImage(null);
+                                            setImagePreview('');
+                                            setEditingIndex(null);
+                                        }}
                                         sx={{
-                                            fontWeight: 'bold',
-                                            display: 'flex',
-                                            alignItems: 'center'
+                                            borderRadius: '8px',
+                                            background: 'linear-gradient(45deg, #3f51b5 30%, #7986cb 90%)',
+                                            boxShadow: '0 4px 12px rgba(63, 81, 181, 0.3)',
+                                            transition: 'all 0.3s',
+                                            '&:hover': {
+                                                transform: 'translateY(-2px)',
+                                                boxShadow: '0 6px 16px rgba(63, 81, 181, 0.4)',
+                                            }
                                         }}
                                     >
-                                        {editingIndex !== null ? <EditIcon sx={{ mr: 1 }} /> : <AddIcon sx={{ mr: 1 }} />}
-                                        {editingIndex !== null ? 'Edit Movie' : 'Add Movie'}
-                                    </Typography>
-                                    <form onSubmit={handleSubmit}>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12} sm={6}>
-                                                <TextField
-                                                    label="Movie Title"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    value={title}
-                                                    onChange={(e) => setTitle(e.target.value)}
-                                                    required
-                                                    sx={{
-                                                        '& .MuiOutlinedInput-root': {
-                                                            borderRadius: '8px',
-                                                            '&.Mui-focused fieldset': {
-                                                                borderColor: '#1a237e',
-                                                            },
-                                                        },
-                                                    }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <TextField
-                                                    label="Description"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    value={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
-                                                    required
-                                                    sx={{
-                                                        '& .MuiOutlinedInput-root': {
-                                                            borderRadius: '8px',
-                                                            '&.Mui-focused fieldset': {
-                                                                borderColor: '#1a237e',
-                                                            },
-                                                        },
-                                                    }}
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    type="submit"
-                                                    fullWidth
-                                                    sx={{
-                                                        borderRadius: '8px',
-                                                        py: 1.5,
-                                                        fontWeight: 'bold',
-                                                        boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)',
-                                                        transition: 'all 0.3s',
-                                                        '&:hover': {
-                                                            transform: 'translateY(-2px)',
-                                                            boxShadow: '0 6px 16px rgba(25, 118, 210, 0.4)',
-                                                        }
-                                                    }}
-                                                >
-                                                    {editingIndex !== null ? 'Update Movie' : 'Add Movie'}
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </form>
-                                </Paper>
-                            </Grow>
+                                        {showForm ? 'Cancel' : 'Add New Movie'}
+                                    </Button>
+                                </Box>
 
-                            {/* Daftar Film dengan animasi */}
-                            <Typography
-                                variant="h6"
-                                gutterBottom
-                                sx={{
-                                    fontWeight: 'bold',
-                                    display: 'flex',
-                                    alignItems: 'center'
-                                }}
-                            >
-                                <MovieIcon sx={{ mr: 1 }} /> Movie List
-                            </Typography>
-                            <TableContainer
-                                component={Paper}
-                                sx={{
-                                    borderRadius: '12px',
-                                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                <Table>
-                                    <TableHead>
-                                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                                            <TableCell sx={{ fontWeight: 'bold' }}>Title</TableCell>
-                                            <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
-                                            <TableCell sx={{ fontWeight: 'bold' }}>Views</TableCell>
-                                            <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {movies.map((movie, index) => {
-                                            // Mendapatkan data views dari movieViewsData
-                                            const viewCount = movieViewsData.find(item => item.name === movie.title)?.value || 0;
-
-                                            return (
-                                                <Fade in={true} timeout={300 + index * 100} key={index}>
-                                                    <TableRow
+                                {/* Form to add/edit a movie */}
+                                <Grow in={showForm} unmountOnExit>
+                                    <Paper
+                                        sx={{
+                                            padding: '20px',
+                                            marginBottom: '20px',
+                                            borderRadius: '16px',
+                                            boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+                                            background: 'rgba(250, 250, 252, 0.97)',
+                                            border: '1px solid rgba(63, 81, 181, 0.1)'
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="h6"
+                                            gutterBottom
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                color: '#3f51b5'
+                                            }}
+                                        >
+                                            {editingIndex !== null ? <EditIcon sx={{ mr: 1 }} /> : <AddIcon sx={{ mr: 1 }} />}
+                                            {editingIndex !== null ? 'Edit Movie' : 'Add Movie'}
+                                        </Typography>
+                                        <form onSubmit={handleSubmit}>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12} sm={6}>
+                                                    <TextField
+                                                        label="Movie Title"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        value={title}
+                                                        onChange={(e) => setTitle(e.target.value)}
+                                                        required
                                                         sx={{
+                                                            '& .MuiOutlinedInput-root': {
+                                                                borderRadius: '8px',
+                                                                '&.Mui-focused fieldset': {
+                                                                    borderColor: '#3f51b5',
+                                                                },
+                                                            },
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} sm={6}>
+                                                    <TextField
+                                                        label="Genre"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        value={genre}
+                                                        onChange={(e) => setGenre(e.target.value)}
+                                                        placeholder="e.g. Action, Drama, Comedy"
+                                                        sx={{
+                                                            '& .MuiOutlinedInput-root': {
+                                                                borderRadius: '8px',
+                                                                '&.Mui-focused fieldset': {
+                                                                    borderColor: '#3f51b5',
+                                                                },
+                                                            },
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        label="Description"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        multiline
+                                                        rows={3}
+                                                        value={description}
+                                                        onChange={(e) => setDescription(e.target.value)}
+                                                        requiredsx={{
+                                                            '& .MuiOutlinedInput-root': {
+                                                                borderRadius: '8px',
+                                                                '&.Mui-focused fieldset': {
+                                                                    borderColor: '#3f51b5',
+                                                                },
+                                                            },
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} sm={6}>
+                                                    <Typography component="legend" gutterBottom>
+                                                        Rating
+                                                    </Typography>
+                                                    <Rating
+                                                        name="movie-rating"
+                                                        value={rating}
+                                                        precision={0.5}
+                                                        onChange={(_, newValue) => {
+                                                            setRating(newValue);
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} sm={6}>
+                                                    <Typography gutterBottom>Movie Poster</Typography>
+                                                    <Button
+                                                        variant="outlined"
+                                                        component="label"
+                                                        startIcon={<PhotoCameraIcon />}
+                                                        sx={{
+                                                            borderRadius: '8px',
+                                                            borderColor: '#3f51b5',
+                                                            color: '#3f51b5',
                                                             '&:hover': {
-                                                                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                                                                transition: 'background-color 0.2s'
+                                                                borderColor: '#7986cb',
+                                                                backgroundColor: 'rgba(63, 81, 181, 0.04)'
                                                             }
                                                         }}
                                                     >
-                                                        <TableCell sx={{ fontWeight: 'medium' }}>{movie.title}</TableCell>
-                                                        <TableCell>{movie.description}</TableCell>
-                                                        <TableCell>{viewCount.toLocaleString()}</TableCell>
-                                                        <TableCell>
+                                                        Upload Image
+                                                        <input
+                                                            type="file"
+                                                            hidden
+                                                            accept="image/*"
+                                                            onChange={handleImageChange}
+                                                        />
+                                                    </Button>
+                                                    {imagePreview && (
+                                                        <Box sx={{ mt: 2, position: 'relative' }}>
+                                                            <img
+                                                                src={imagePreview}
+                                                                alt="Movie poster preview"
+                                                                style={{
+                                                                    maxWidth: '100%',
+                                                                    maxHeight: '150px',
+                                                                    borderRadius: '8px',
+                                                                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                                                                }}
+                                                            />
                                                             <IconButton
-                                                                color="primary"
-                                                                onClick={() => handleEdit(index)}
+                                                                size="small"
+                                                                onClick={() => {
+                                                                    setImage(null);
+                                                                    setImagePreview('');
+                                                                }}
                                                                 sx={{
-                                                                    mr: 1,
-                                                                    transition: 'transform 0.2s',
-                                                                    '&:hover': { transform: 'scale(1.1)' }
+                                                                    position: 'absolute',
+                                                                    top: 0,
+                                                                    right: 0,
+                                                                    backgroundColor: 'rgba(255,255,255,0.7)',
+                                                                    '&:hover': {
+                                                                        backgroundColor: 'rgba(255,255,255,0.9)',
+                                                                    }
                                                                 }}
                                                             >
-                                                                <EditIcon />
+                                                                <DeleteIcon fontSize="small" />
                                                             </IconButton>
-                                                            <IconButton
-                                                                color="error"
-                                                                onClick={() => handleDelete(index)}
+                                                        </Box>
+                                                    )}
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                                                        <Button
+                                                            type="submit"
+                                                            variant="contained"
+                                                            color="primary"
+                                                            sx={{
+                                                                borderRadius: '8px',
+                                                                background: 'linear-gradient(45deg, #3f51b5 30%, #7986cb 90%)',
+                                                                boxShadow: '0 4px 12px rgba(63, 81, 181, 0.3)',
+                                                                transition: 'all 0.3s',
+                                                                '&:hover': {
+                                                                    transform: 'translateY(-2px)',
+                                                                    boxShadow: '0 6px 16px rgba(63, 81, 181, 0.4)',
+                                                                }
+                                                            }}
+                                                        >
+                                                            {editingIndex !== null ? 'Update Movie' : 'Add Movie'}
+                                                        </Button>
+                                                    </Box>
+                                                </Grid>
+                                            </Grid>
+                                        </form>
+                                    </Paper>
+                                </Grow>
+
+                                {/* Movie list */}
+                                <Box>
+                                    <Grid container spacing={3}>
+                                        {movies.map((movie, index) => (
+                                            <Grid item xs={12} sm={6} md={4} key={index}>
+                                                <Zoom in={true} style={{ transitionDelay: `${index * 100}ms` }}>
+                                                    <Card
+                                                        sx={{
+                                                            borderRadius: '16px',
+                                                            overflow: 'hidden',
+                                                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                                                            transition: 'transform 0.3s, box-shadow 0.3s',
+                                                            '&:hover': {
+                                                                transform: 'translateY(-5px)',
+                                                                boxShadow: '0 8px 25px rgba(0,0,0,0.12)',
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Box sx={{ position: 'relative' }}>
+                                                            <Box
                                                                 sx={{
-                                                                    transition: 'transform 0.2s',
-                                                                    '&:hover': { transform: 'scale(1.1)' }
+                                                                    height: '200px',
+                                                                    background: `url(${movie.image}) center/cover no-repeat`,
+                                                                    position: 'relative',
+                                                                    '&::after': {
+                                                                        content: '""',
+                                                                        position: 'absolute',
+                                                                        top: 0,
+                                                                        left: 0,
+                                                                        width: '100%',
+                                                                        height: '100%',
+                                                                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%)'
+                                                                    }
+                                                                }}
+                                                            />
+                                                            <Box
+                                                                sx={{
+                                                                    position: 'absolute',
+                                                                    top: '10px',
+                                                                    right: '10px',
+                                                                    display: 'flex',
+                                                                    gap: '5px'
                                                                 }}
                                                             >
-                                                                <DeleteIcon />
-                                                            </IconButton>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                </Fade>
-                                            );
-                                        })}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Box>
-                    )}
-                </Paper>
+                                                                <IconButton
+                                                                    size="small"
+                                                                    onClick={() => handleEdit(index)}
+                                                                    sx={{
+                                                                        backgroundColor: 'rgba(255,255,255,0.9)',
+                                                                        '&:hover': {
+                                                                            backgroundColor: 'white',
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <EditIcon fontSize="small" />
+                                                                </IconButton>
+                                                                <IconButton
+                                                                    size="small"
+                                                                    onClick={() => handleDelete(index)}
+                                                                    sx={{
+                                                                        backgroundColor: 'rgba(255,255,255,0.9)',
+                                                                        '&:hover': {
+                                                                            backgroundColor: 'white',
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <DeleteIcon fontSize="small" />
+                                                                </IconButton>
+                                                            </Box>
+                                                        </Box>
+                                                        <CardContent sx={{ p: 3 }}>
+                                                            <Typography variant="h6" component="div" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                                                {movie.title}
+                                                            </Typography>
+                                                            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }} >
+                                                                {movie.description}
+                                                            </Typography>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 2 }}>
+                                                                {movie.genre && (
+                                                                    <Chip
+                                                                        label={movie.genre}
+                                                                        size="small"
+                                                                        color="primary"
+                                                                        variant="outlined"
+                                                                        sx={{ borderRadius: '6px' }}
+                                                                    />
+                                                                )}
+                                                                <Rating
+                                                                    name={`movie-rating-${index}`}
+                                                                    value={movie.rating}
+                                                                    precision={0.5}
+                                                                    size="small"
+                                                                    readOnly
+                                                                />
+                                                            </Box>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Zoom>
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+
+                                    {movies.length === 0 && (
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 5 }}>
+                                            <MovieIcon sx={{ fontSize: 60, color: '#3f51b5', opacity: 0.5, mb: 2 }} />
+                                            <Typography variant="h6" color="text.secondary">
+                                                No movies available
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                                Click the "Add New Movie" button to add your first movie
+                                            </Typography>
+                                            <Button
+                                                variant="outlined"
+                                                color="primary"
+                                                startIcon={<AddIcon />}
+                                                onClick={() => setShowForm(true)}
+                                                sx={{
+                                                    borderRadius: '8px',
+                                                    borderColor: '#3f51b5',
+                                                    '&:hover': {
+                                                        borderColor: '#7986cb',
+                                                        backgroundColor: 'rgba(63, 81, 181, 0.04)'
+                                                    }
+                                                }}
+                                            >
+                                                Add New Movie
+                                            </Button>
+                                        </Box>
+                                    )}
+                                </Box>
+                            </Box>
+                        )}
+                    </Paper>
+                </Container>
             </Fade>
         </Box>
     );
