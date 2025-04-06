@@ -36,7 +36,7 @@ const Featured = () => {
                         {[...Array(6)].map((_, index) => (
                             <div key={index} className="featured-item">
                                 <img
-                                    src="../src/assets/a.jpg"
+                                    src="../src/assets/a1.jpg"
                                     alt="Movie"
                                     className="featured-img"
                                 />
