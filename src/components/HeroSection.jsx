@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Data film
 const images = [
-    { id: 1, src: "./src/assets/a.jpg", title: "Death of a Unicorn", description: "Watch the thrilling new trailer now!", related: "./src/assets/1.jpg", genre: "Thriller" },
-    { id: 2, src: "./src/assets/b.jpg", title: "Movie 2", description: "An adventure you don't want to miss.", related: "./src/assets/2.jpg", genre: "Adventure" },
-    { id: 3, src: "./src/assets/c.jpg", title: "Movie 3", description: "A cinematic experience like no other.", related: "./src/assets/3.jpg", genre: "Drama" },
-    { id: 4, src: "./src/assets/d.jpg", title: "Movie 4", description: "A cinematic experience like no other.", related: "./src/assets/4.jpg", genre: "Action" },
-    { id: 5, src: "./src/assets/e.jpg", title: "Movie 5", description: "A cinematic experience like no other.", related: "./src/assets/5.jpg", genre: "Comedy" },
-    { id: 6, src: "./src/assets/f.jpg", title: "Movie 6", description: "A cinematic experience like no other.", related: "./src/assets/6.jpg", genre: "Horror" },
+    { id: 1, src: "/images/a.jpg", title: "Death of a Unicorn", description: "Watch the thrilling new trailer now!", related: "/images/1.jpg", genre: "Thriller" },
+    { id: 2, src: "/images/b.jpg", title: "Movie 2", description: "An adventure you don't want to miss.", related: "/images/2.jpg", genre: "Adventure" },
+    { id: 3, src: "/images/c.jpg", title: "Movie 3", description: "A cinematic experience like no other.", related: "/images/3.jpg", genre: "Drama" },
+    { id: 4, src: "/images/d.jpg", title: "Movie 4", description: "A cinematic experience like no other.", related: "/images/4.jpg", genre: "Action" },
+    { id: 5, src: "/images/e.jpg", title: "Movie 5", description: "A cinematic experience like no other.", related: "/images/5.jpg", genre: "Comedy" },
+    { id: 6, src: "/images/f.jpg", title: "Movie 6", description: "A cinematic experience like no other.", related: "/images/6.jpg", genre: "Horror" },
 ];
 
 const HeroSection = () => {

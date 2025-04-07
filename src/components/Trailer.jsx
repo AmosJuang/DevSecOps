@@ -12,7 +12,7 @@ const Trailer = () => {
         id: 1,
         title: "Death of a Unicorn",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-        posterImage: "src/assets/1.jpg",
+        posterImage: "/images/1.jpg",
         releaseYear: "2024",
         genre: "Drama, Fantasy",
         duration: "2h 15m",

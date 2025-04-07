@@ -4,9 +4,9 @@ import { Typography, Box, Grid, Card, CardMedia, CardContent, CircularProgress, 
 import { motion } from 'framer-motion';
 import StarIcon from '@mui/icons-material/Star';
 import SearchIcon from '@mui/icons-material/Search';
-import moviePoster1 from '../assets/1.jpg';
-import moviePosterA from '../assets/2.jpg';
-import moviePosterB from '../assets/3.jpg';
+import moviePoster1 from '/images/1.jpg';
+import moviePosterA from '/images/2.jpg';
+import moviePosterB from '/images/3.jpg';
 
 const SearchResults = () => {
     const location = useLocation();

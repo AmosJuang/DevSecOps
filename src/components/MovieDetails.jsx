@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import moviePoster from '../assets/1.jpg';
+import moviePoster from '/images/1.jpg';
 
 const MovieDetails = () => {
     const { id } = useParams();
