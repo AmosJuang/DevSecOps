@@ -14,8 +14,8 @@ services:
       - devsecops_network
 
   backend:
-    build: 
-      context: ./devsecops-backend
+    build:
+      context: ./backend
     container_name: devsecops-backend
     ports:
       - "3000:3000"
